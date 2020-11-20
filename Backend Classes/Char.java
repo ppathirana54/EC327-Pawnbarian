@@ -9,41 +9,48 @@
 public class Char
 {
     // instance variables - replace the example below with your own
-    private double pos[]; 
+    private int pos[]; 
     private String name; 
+    final int INITIAL_STARTING_POS = 2;
 
     /**
      * Constructor for objects of class Char
      */
     public Char()
     {
-        pos = new double[]{3,3};
+        pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
         this.name = "Dummy";
     }
     
     public Char(String init_name)
     {
-        pos = new double[]{3,3};
+        pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
         this.name = init_name;
     
     }
     
     
-    public Char(double xpos, double ypos, String init_name)
+    public Char(int xpos, Integer ypos, String init_name)
     {
-        pos = new double[]{xpos,ypos};
+        pos = new int[]{xpos,ypos};
         this.name = init_name;
     }
     
-    public double[] getPos()
+    public int[] getPos()
     {
         return pos;
     }
 
-    public void move(double x, double y)
+    public void moveTo(int x, int y)
     {
         pos[1] = x;
         pos[2] = y;
+    }
+
+    public void move(int x, int y)
+    {
+        pos[1] = pos[1] + x;
+        pos[2] = pos[2] + y;
     }
 
     public String getName()
