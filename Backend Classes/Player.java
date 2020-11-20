@@ -1,6 +1,7 @@
 
 /**
- * Write a description of class Player here.
+ * Creates the player object contains their position health and gold.
+ * Need to implement card drawing/card moving
  *
  * @author (your name)
  * @version (a version number or a date)

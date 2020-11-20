@@ -1,3 +1,11 @@
+/**
+ * Creates the board class. Has a list of the number of enemies and creates a player. 
+ * 
+ * Need to implement alot tbh
+ *
+ */
+
+
 import java.util.ArrayList;
 
 public class Board
