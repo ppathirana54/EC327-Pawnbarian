@@ -1,3 +1,11 @@
+/**
+ * Creates an object of the Piece Cards, contains the type.
+ * 
+ * Need to implement a method to return potential moves
+ *
+ */
+
+
 import java.util.Hashtable;
 //import java.util.ArrayList;
 

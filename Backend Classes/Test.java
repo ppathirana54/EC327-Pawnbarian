@@ -1,3 +1,9 @@
+/**
+ * Just a test class used to test objects and constructors
+ *
+ * 
+ */
+
 
 public class Test{
     public static void main(String[]args)
