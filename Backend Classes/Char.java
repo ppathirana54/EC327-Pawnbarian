@@ -31,7 +31,7 @@ public class Char
     }
     
     
-    public Char(int xpos, Integer ypos, String init_name)
+    public Char(int xpos, int ypos, String init_name)
     {
         pos = new int[]{xpos,ypos};
         this.name = init_name;
