@@ -38,23 +38,82 @@ public class Cards
         this.piece = piece;
     }
 
-    public int[][] getMovement(int[] initPOS)
+    public boolean getMovement(int[] initPOS, int[] finalPOS)
     {
         //Pawn
         if(piece == 1)
-        {
-            return {1,0};
+        {   
+            //Setting the move coordinates for the piece
+
+            //Error checking
+
+            return moves;
         }
 
         //Knight
+        else if(piece == 2)
+        {
+            return moves; 
+        }
 
         //Bishop
+        else if(piece == 3)
+        {
+            int x = finalPOS[0] - initPOS[0];
+            int y = finalPOS[1] - initPOS[1];
+
+            if (abs(x) == abs(y)){
+              return true;
+            }
+            else{
+              return false;
+            }
+        }
 
         //Rook
+        else if(piece == 4)
+        {
+            if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
+              return true;
+            }
+            else{
+              return false;
+            }
+        }
 
         //Queen
+        else if(piece == 5)
+        {
+            int x = finalPOS[0] - initPOS[0];
+            int y = finalPOS[1] - initPOS[1];
+
+            if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
+              return true;
+            }
+            else if (abs(x) == abs(y)){
+              return true;
+            }
+            else{
+              return false;
+            }
+        }
 
         //King
+        else if(piece == 6)
+        {
+            int x = finalPOS[0] - initPOS[0];
+            int y = finalPOS[1] - initPOS[1];
+
+            if (abs(x + y) == 1){
+              return true;
+            }
+            else if ((abs(x) == 1 && abs(y) == 1)){
+              return true;
+            }
+            else{
+              return false;
+            }
+        }
 
     }
 
