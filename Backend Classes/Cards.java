@@ -7,6 +7,7 @@
 
 
 import java.util.Hashtable;
+import java.lang.Math;
 //import java.util.ArrayList;
 
 
@@ -18,12 +19,12 @@ public class Cards
 
     public Cards(int piece)
     {
-       piecesList.put(1, "Pawn");
-       piecesList.put(2, "Knight");
-       piecesList.put(3, "Bishop");
-       piecesList.put(4, "Rook");
-       piecesList.put(5, "Queen");
-       piecesList.put(6, "King");
+       piecesList.put(0, "Pawn");
+       piecesList.put(1, "Knight");
+       piecesList.put(2, "Bishop");
+       piecesList.put(3, "Rook");
+       piecesList.put(4, "Queen");
+       piecesList.put(5, "King");
 
        this.piece = piece;
     }
@@ -41,28 +42,33 @@ public class Cards
     public boolean getMovement(int[] initPOS, int[] finalPOS)
     {
         //Pawn
-        if(piece == 1)
+        if(piece == 0)
         {   
             //Setting the move coordinates for the piece
 
             //Error checking
-
-            return moves;
+            int y = finalPOS[1] - initPOS[1];
+            if(y == 1)
+            {
+              return true;
+            }
         }
 
         //Knight
-        else if(piece == 2)
+        else if(piece == 1)
         {
-            return moves; 
+            int x = Math.abs(initPOS[0] - finalPOS[0]); 
+            int y = Math.abs(initPOS[1] - finalPOS[1]); 
+            return x * y == 2;  
         }
 
         //Bishop
-        else if(piece == 3)
+        else if(piece == 2)
         {
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if (abs(x) == abs(y)){
+            if (Math.abs(x) == Math.abs(y)){
               return true;
             }
             else{
@@ -71,7 +77,7 @@ public class Cards
         }
 
         //Rook
-        else if(piece == 4)
+        else if(piece == 3)
         {
             if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
               return true;
@@ -82,7 +88,7 @@ public class Cards
         }
 
         //Queen
-        else if(piece == 5)
+        else if(piece == 4)
         {
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
@@ -90,7 +96,7 @@ public class Cards
             if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
               return true;
             }
-            else if (abs(x) == abs(y)){
+            else if (Math.abs(x) == Math.abs(y)){
               return true;
             }
             else{
@@ -99,21 +105,23 @@ public class Cards
         }
 
         //King
-        else if(piece == 6)
+        else if(piece == 5)
         {
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if (abs(x + y) == 1){
+            if (Math.abs(x + y) == 1){
               return true;
             }
-            else if ((abs(x) == 1 && abs(y) == 1)){
+            else if ((Math.abs(x) == 1 && Math.abs(y) == 1)){
               return true;
             }
             else{
               return false;
             }
         }
+
+        return false;
 
     }
 

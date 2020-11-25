@@ -10,8 +10,7 @@ import java.util.ArrayList;
 
 public class Board
 {
-    private ArrayList<Enemy> enimiesout = new ArrayList<Enemy>();
-    private int numberenemies=0;
+    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private Player player;
 
     public Board()
@@ -19,27 +18,31 @@ public class Board
         player = new Player();
     }
 
-    public void makeenemy(int x, int y)
+    public int getNumEnemies()
     {
-        enimiesout.add(new Enemy());
-        numberenemies++;
-        enimesout.get(numberenemies).moveTo(x,y);
+        return enemies.size();
     }
 
-    public int[] getplayerposition()
+    public void makeEnemy(int x, int y)
+    {
+        enemies.add(new Enemy());
+        enemies.get(getNumEnemies() - 1).moveTo(x,y);
+    }
+
+    public int[] getPlayerPosition()
     {
         return player.getPos();
     }
 
-    public int[] getenemyposition(int enemynumber)
+    public int[] getEnemyPosition(int enemynumber)
     {
-        return enimesout.get(enemynumber).getPos();
+        return enemies.get(enemynumber).getPos();
     }
     
     // deletes enemy that is captured
     public void capturedenemy()
     {
-        for (int i=0;i<numberenemies;i++)
+        for (int i=0;i<getNumEnemies();i++)
         {
             if (getplayerposition()[0]==getenemyposition(i)[0] && getplayerposition()[1]==getenemyposition(i)[1])
             {

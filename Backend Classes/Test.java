@@ -5,6 +5,7 @@
  */
 
 
+
 public class Test{
     public static void main(String[]args)
     {
@@ -24,12 +25,22 @@ public class Test{
         
         // System.out.println(joe.getHealth());
         
-        Board testboard = new Board();
-        System.out.println(testboard.getplayerposition()[0] + " " + testboard.getplayerposition()[1]);     
-        System.out.println(tesboard.getNumberenemies());
+        // Board testboard = new Board();
+        // System.out.println(testboard.getplayerposition()[0] + " " + testboard.getplayerposition()[1]);     
+        // System.out.println(tesboard.getNumberenemies());
 
         // Cards pawn = new Cards(1);
         // System.out.println(pawn.getPiece());
+
+
+        //11/25/20
+        Cards test = new Cards(3);
+
+        System.out.println(test.getPiece());
+
+        int initPOS[] = {0,0};
+        int finalPOS[] = {0,3}; 
+        System.out.println(test.getMovement(initPOS, finalPOS));
         
         
     }
