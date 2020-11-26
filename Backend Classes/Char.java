@@ -1,5 +1,3 @@
-
-
 /**
  * Holds Position and Can Move
  * Complete!
@@ -44,14 +42,14 @@ public class Char
 
     public void moveTo(int x, int y)
     {
-        pos[1] = x;
-        pos[2] = y;
+        pos[0] = x;
+        pos[1] = y;
     }
 
     public void move(int x, int y)
     {
-        pos[1] = pos[1] + x;
-        pos[2] = pos[2] + y;
+        pos[0] = pos[0] + x;
+        pos[1] = pos[1] + y;
     }
 
     public String getName()
