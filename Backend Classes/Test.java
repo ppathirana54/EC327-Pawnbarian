@@ -34,14 +34,22 @@ public class Test{
 
 
         //11/25/20
-        Cards test = new Cards(3);
+        /*Cards test = new Cards(3);
 
         System.out.println(test.getPiece());
 
         int initPOS[] = {0,0};
         int finalPOS[] = {0,3}; 
         System.out.println(test.getMovement(initPOS, finalPOS));
+        */
         
-        
+        // 11/26/20 enemy class test
+        Enemy testenemy = new Enemy();
+        System.out.println(testenemy.getHealth());
+        testenemy.setHealth(2);
+        System.out.println(testenemy.getHealth());
+        System.out.println(testenemy.getPos()[0] + " " + testenemy.getPos()[1]);
+        testenemy.moveTo(3,3);
+        System.out.println(testenemy.getPos()[0] + " " + testenemy.getPos()[1]);
     }
 }
