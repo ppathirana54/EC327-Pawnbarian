@@ -1,6 +1,10 @@
 package com.example.pawnbarianmockup;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -12,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ImageButton btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        ImageButton btn =  (ImageButton) findViewById(R.id.imageButtona0);
+        btn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "It Works", Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
+
+
 
 }
