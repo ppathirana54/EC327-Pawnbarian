@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity implements onClickListener{
+public class MainActivity extends AppCompatActivity {
 
     private ImageButton btn;
     @Override
@@ -30,12 +30,7 @@ public class MainActivity extends AppCompatActivity implements onClickListener{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        ImageButton btn =  (ImageButton) findViewById(R.id.imageButtona0);
-        btn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "It Works", Toast.LENGTH_LONG).show();
-            }
-        });
+
     }
 
 
