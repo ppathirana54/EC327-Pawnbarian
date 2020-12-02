@@ -7,7 +7,8 @@
 
 
 import java.util.Hashtable;
-import java.lang.Math;
+
+import static java.lang.Math.abs;
 //import java.util.ArrayList;
 
 
@@ -17,16 +18,16 @@ public class Cards
     private int piece;
     // private ArrayList<String> mods?
 
-    public Cards(int piece)
+    public Cards()
     {
-       piecesList.put(1, "Pawn");
-       piecesList.put(2, "Knight");
-       piecesList.put(3, "Bishop");
-       piecesList.put(4, "Rook");
-       piecesList.put(5, "Queen");
-       piecesList.put(6, "King");
+        piecesList.put(1, "Pawn");
+        piecesList.put(2, "Knight");
+        piecesList.put(3, "Bishop");
+        piecesList.put(4, "Rook");
+        piecesList.put(5, "Queen");
+        piecesList.put(6, "King");
 
-       this.piece = piece;
+        this.piece = piece;
     }
 
     public String getPiece()
@@ -39,11 +40,11 @@ public class Cards
         this.piece = piece;
     }
 
-    public boolean getMovement(int[] initPOS, int[] finalPOS)
+    public boolean getMovement(int[] initPOS, int[] finalPOS, int piece)
     {
         //Pawn
         if(piece == 1)
-        {   
+        {
             //needs position of enemy
         }
 
@@ -54,10 +55,10 @@ public class Cards
             int y = finalPOS[1] - initPOS[1];
 
             if ((abs(x) == 3 && abs(y) == 1) || (abs(y) == 3 && abs(x) == 1)){
-              return true;
+                return true;
             }
             else{
-              return false;
+                return false;
             }
         }
 
@@ -68,21 +69,21 @@ public class Cards
             int y = finalPOS[1] - initPOS[1];
 
             if (abs(x) == abs(y)){
-              return true;
+                return true;
             }
             else{
-              return false;
+                return false;
             }
         }
 
         //Rook
         else if(piece == 4)
         {
-            if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
-              return true;
+            if (((initPOS[0] == finalPOS[0]) && (initPOS[1] != finalPOS[1])) || ((initPOS[1] == finalPOS[1]) && (initPOS[0] != finalPOS[0]))){
+                return true;
             }
             else{
-              return false;
+                return false;
             }
         }
 
@@ -93,13 +94,13 @@ public class Cards
             int y = finalPOS[1] - initPOS[1];
 
             if (initPOS[0] == finalPOS[0] || initPOS[1] == finalPOS[1]){
-              return true;
+                return true;
             }
             else if (abs(x) == abs(y)){
-              return true;
+                return true;
             }
             else{
-              return false;
+                return false;
             }
         }
 
@@ -110,18 +111,15 @@ public class Cards
             int y = finalPOS[1] - initPOS[1];
 
             if (abs(x + y) == 1){
-              return true;
+                return true;
             }
             else if ((abs(x) == 1 && abs(y) == 1)){
-              return true;
+                return true;
             }
             else{
-              return false;
+                return false;
             }
         }
-
+        return false;
     }
-
-
-
 }

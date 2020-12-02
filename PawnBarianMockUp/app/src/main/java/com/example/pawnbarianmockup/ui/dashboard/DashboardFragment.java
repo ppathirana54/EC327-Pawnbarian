@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+
+
 import com.example.pawnbarianmockup.R;
+import com.example.pawnbarianmockup.ui.notifications.Cards;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener{
 
@@ -43,11 +46,27 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private ImageButton Buttone3;
     private ImageButton Buttone4;
 
+    private ImageButton Card1;
+    private ImageButton Card2;
+    private ImageButton Card3;
+
+    private int card1 = 0,
+                card2 = 0,
+                card3 = 0,
+                card;
+
+    private int cardpress1,
+                cardpress2,
+                cardpress3;
+
+    private int Pos[] = {2, 2};
+
+
     private DashboardViewModel dashboardViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) { //Set up the board state for the game to begin
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -62,7 +81,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     }
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) { //Creating image buttons and mapping them
         super.onActivityCreated(savedInstanceState);
         Buttona0 = (ImageButton) getActivity().findViewById(R.id.imageButtona0);
         Buttona1 = (ImageButton) getActivity().findViewById(R.id.imageButtona1);
@@ -93,6 +112,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Buttone2 = (ImageButton) getActivity().findViewById(R.id.imageButtone2);
         Buttone3 = (ImageButton) getActivity().findViewById(R.id.imageButtone3);
         Buttone4 = (ImageButton) getActivity().findViewById(R.id.imageButtone4);
+
+        Card1 = (ImageButton) getActivity().findViewById(R.id.imageButton);
+        Card2 = (ImageButton) getActivity().findViewById(R.id.imageButton2);
+        Card3 = (ImageButton) getActivity().findViewById(R.id.imageButton3);
 
         Buttona0.setOnClickListener(this);
         Buttona1.setOnClickListener(this);
@@ -125,439 +148,1025 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Buttone4.setOnClickListener(this);
 
         Buttonc2.setImageResource(R.drawable.barbarian);
+
+        int     bishop = R.drawable.bishop,
+                king = R.drawable.king,
+                knight = R.drawable.knight,
+                pawn = R.drawable.pawn,
+                queen = R.drawable.queen,
+                rook = R.drawable.rook;
+
+        Card1.setOnClickListener(this);
+        Card2.setOnClickListener(this);
+        Card3.setOnClickListener(this);
+
+        //Randomly assign new cards at the start of new turn
+        Card1.setImageResource(bishop); //For now just change the name for the picture
+        Card2.setImageResource(rook);
+        Card3.setImageResource(king);
+
+        card1 = 3; //For now just change the number based on the number assigned in the Cards class
+        card2 = 4;
+        card3 = 6;
+
     }
 
     public void onClick(View v){
         //Buttona0.setImageResource(R.drawable.barbarian);
+
+        Cards cards = new Cards(); //get access to Card class functions
         int tileset;
-
-
+        //Selector for the move cards
         switch(v.getId()){
-            case R.id.imageButtona0:
-            {
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+            case R.id.imageButton:{
+                cardpress1 = 1;
+            }
+            case R.id.imageButton2:{
+                cardpress2 = 1;
+                break;
+            }
+            case R.id.imageButton3:{
+                cardpress3 = 1;
+                break;
+            }
+        }
 
-                        button.setImageResource(tileset);
-                    }
+        //Button for each tile and moving the player
+        switch(v.getId()){
+            case R.id.imageButtona0: {
+                int FinalPos1[] = {0, 4}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttona0.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos1, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) { //Setting all tiles to default state
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttona0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Pos = FinalPos1; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtona1:
             {
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos2[] = {1, 4}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttona1.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos2, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttona1.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos2; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtona2: {
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos3[] = {2, 4}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttona2.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos3, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttona2.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos3; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtona3:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos4[] = {3, 4}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttona3.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos4, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttona3.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos4; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtona4:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos5[] = {4, 4}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttona4.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos5, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttona4.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos5; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonb0:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos6[] = {0, 3}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonb0.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos6, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonb0.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos6; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonb1:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos7[] = {1, 3}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonb1.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos7, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonb1.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos7; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonb2:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos8[] = {2, 3}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonb2.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos8, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonb2.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos8; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonb3:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos9[] = {3, 3}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonb3.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos9, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonb3.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos9; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonb4:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos10[] = {4, 3}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonb4.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos10, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonb4.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos10; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonc0:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos11[] = {0, 2}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonc0.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos11, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonc0.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos11; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonc1:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos12[] = {1, 2}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonc1.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos12, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonc1.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos12; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonc2:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos13[] = {2, 2}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonc2.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos13, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonc2.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos13; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonc3:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos14[] = {3, 2}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonc3.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos14, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonc3.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos14; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtonc4:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos15[] = {4, 2}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttonc4.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos15, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttonc4.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos15; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtond0:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos16[] = {0, 1}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttond0.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos16, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttond0.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos16; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtond1:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos17[] = {1, 1}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttond1.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos17, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttond1.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos17; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtond2:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos18[] = {2, 1}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttond2.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos18, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttond2.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos18; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtond3:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos19[] = {3, 1}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttond3.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos19, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttond3.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos19; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtond4:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos20[] = {4, 1}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttond4.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos20, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttond4.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos20; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtone0:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos21[] = {0, 0}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttone0.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos21, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttone0.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos21; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtone1:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos22[] = {1, 0}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttone1.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos22, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttone1.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos22; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtone2:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos23[] = {2, 0}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttone2.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos23, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttone2.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos23; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtone3:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos24[] = {3, 0}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttone3.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos24, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttone3.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos24; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButtone4:{
-                for (char y = 'a'; y < 'f'; y++){
-                    for (int i = 0; i < 5; i++){
-                        if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))){
-                            tileset = R.drawable.darktile;
-                        }
-                        else{
-                            tileset = R.drawable.tile;
-                        }
-                        ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
-
-                        button.setImageResource(tileset);
-                    }
+                int FinalPos25[] = {4, 0}; //Coordinates of tile
+                if (cardpress1 == 1){
+                    card = card1;
                 }
-                Buttone4.setImageResource(R.drawable.barbarian);
+                else if (cardpress2 == 1){
+                    card = card2;
+                }
+                else if (cardpress3 == 1){
+                    card = card3;
+                }
+                else{
+                    card = 0;
+                }
+                boolean move = cards.getMovement(Pos, FinalPos25, card); //Checking if movement is valid
+                if (move) {
+                    for (char y = 'a'; y < 'f'; y++) {
+                        for (int i = 0; i < 5; i++) {
+                            if (((y == 'a' || y == 'c' || y == 'e') && (i == 0 || i == 2 || i == 4)) || ((y == 'b' || y == 'd') && (i == 1 || i == 3))) {
+                                tileset = R.drawable.darktile;
+                            } else {
+                                tileset = R.drawable.tile;
+                            }
+                            ImageButton button = (ImageButton) getActivity().findViewById(getResources().getIdentifier("imageButton" + y + i, "id", this.getActivity().getPackageName()));
+
+                            button.setImageResource(tileset);
+                        }
+                    }
+                    Buttone4.setImageResource(R.drawable.barbarian);
+                    Pos = FinalPos25; //Updating position
+                    cardpress1 = 0; //Reseting selector states
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                cardpress1 = 0; //Reseting selector states
+                cardpress2 = 0;
+                cardpress3 = 0;
                 break;
             }
         }
