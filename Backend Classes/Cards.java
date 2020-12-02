@@ -110,10 +110,7 @@ public class Cards
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if (abs(x + y) == 1){
-                return true;
-            }
-            else if ((abs(x) == 1 && abs(y) == 1)){
+            if (abs(x) <= 1 && abs(y) <= 1 ){
                 return true;
             }
             else{
