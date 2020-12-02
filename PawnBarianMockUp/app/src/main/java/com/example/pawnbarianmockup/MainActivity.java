@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton Button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +36,6 @@ public class MainActivity extends AppCompatActivity {
         //CharSequence text = "Hello toast!";
         //int duration = Toast.LENGTH_SHORT;
 
-        Button = (ImageButton) findViewById(R.id.imageButtona1);
-
-        Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(context, text, duration).show();
-                Button.setImageResource(R.drawable.barbarian);
-
-            }
-        });
     }
 
 }
