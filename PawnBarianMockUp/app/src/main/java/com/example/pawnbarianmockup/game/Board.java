@@ -64,6 +64,20 @@ public class Board
         }
     }
 
+    public int checkDamage(int x, int y)
+    {
+        int totalDamage = 0;
+        for(int i = 0; i < getNumberEnemies(); i++)
+        {
+            if(enemies.get(i).checkDamage(x,y))
+            {
+                totalDamage++;
+            }
+        }
+
+        return totalDamage;
+    }
+
     public int getNumberEnemies() {                            // returns the number of enemies out
         return enemies.size();
     }

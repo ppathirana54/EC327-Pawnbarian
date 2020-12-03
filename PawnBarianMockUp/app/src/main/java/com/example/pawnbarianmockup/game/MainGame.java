@@ -52,14 +52,7 @@ public class MainGame {
 
         for(int i = 0; i < board.getNumberEnemies(); i++)
         {
-            enemyPos = board.getEnemyPos(i);
-
-            if (abs(x + y) == 1){
-                return 1;
-            }
-            else if ((abs(x) == 1 && abs(y) == 1)){
-                return 1;
-            }
+            board.checkDamage(x,y);
         }
         return 0;
     }
@@ -71,6 +64,8 @@ public class MainGame {
     {
         board.captureEnemy();
     }
+
+
 //    public void playerTurn()
 //    {
 //        // Draw cards pick cards
