@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pawnbarianmockup.R;
-import com.example.pawnbarianmockup.Cards;
+import com.example.pawnbarianmockup.ui.notifications.Cards;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener{
 
