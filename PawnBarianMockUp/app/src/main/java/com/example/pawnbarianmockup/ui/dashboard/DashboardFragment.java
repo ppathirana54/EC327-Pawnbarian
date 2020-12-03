@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -162,13 +163,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Card3.setOnClickListener(this);
 
         //Randomly assign new cards at the start of new turn
-        Card1.setImageResource(bishop); //For now just change the name for the picture
-        Card2.setImageResource(rook);
-        Card3.setImageResource(king);
+        Card1.setImageResource(knight); //For now just change the name for the picture
+        Card2.setImageResource(pawn);
+        Card3.setImageResource(queen);
 
-        card1 = 3; //For now just change the number based on the number assigned in the Cards class
-        card2 = 4;
-        card3 = 6;
+        card1 = 2; //For now just change the number based on the number assigned in the Cards class
+        card2 = 1;
+        card3 = 5;
 
     }
 
@@ -181,12 +182,19 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         switch(v.getId()){
             case R.id.imageButton:{
                 cardpress1 = 1;
+                cardpress2 = 0;
+                cardpress3 = 0;
+                break;
             }
             case R.id.imageButton2:{
+                cardpress1 = 0;
                 cardpress2 = 1;
+                cardpress3 = 0;
                 break;
             }
             case R.id.imageButton3:{
+                cardpress1 = 0;
+                cardpress2 = 0;
                 cardpress3 = 1;
                 break;
             }
@@ -240,6 +248,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -292,6 +305,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -343,6 +361,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -394,6 +417,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -445,6 +473,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -496,6 +529,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -547,6 +585,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -598,6 +641,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -649,6 +697,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -700,6 +753,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -751,6 +809,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -802,6 +865,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -853,6 +921,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -904,6 +977,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -955,6 +1033,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1006,6 +1089,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1057,6 +1145,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1108,6 +1201,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1159,6 +1257,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1210,6 +1313,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1261,6 +1369,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1312,6 +1425,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1363,6 +1481,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1414,6 +1537,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
@@ -1465,6 +1593,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
+                else
+                {
+                    Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
+                }
+
                 cardpress1 = 0; //Reseting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
