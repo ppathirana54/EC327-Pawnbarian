@@ -16,6 +16,7 @@ public class Enemy extends Char
     
     public Enemy()                          // Enemy constructor
     {
+        setName("Skeleton");
         health=1;
     }
 
