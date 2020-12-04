@@ -1,13 +1,13 @@
-/**
+package com.example.pawnbarianmockup.game; /**
+ /**
  * Creates an object of the Piece Cards, contains the type.
- * 
+ *
  * Need to implement a method to return potential moves
  *
  */
 
 
 import java.util.Hashtable;
-
 import static java.lang.Math.abs;
 //import java.util.ArrayList;
 
@@ -16,9 +16,11 @@ public class Cards
 {
     private Hashtable<Integer, String> piecesList = new Hashtable<Integer, String>();
     private int piece;
+    private boolean pawncancapture;
+    private boolean enemyinfrontofpawn;
     // private ArrayList<String> mods?
 
-    public Cards()
+    public Cards(int piece)
     {
         piecesList.put(1, "Pawn");
         piecesList.put(2, "Knight");
@@ -27,7 +29,19 @@ public class Cards
         piecesList.put(5, "Queen");
         piecesList.put(6, "King");
 
+        pawncancapture = false;
+        enemyinfrontofpawn = false;
+
         this.piece = piece;
+    }
+    public void set_pawncancapture()
+    {
+        pawncancapture = true;
+    }
+
+    public void set_enemyinfrontofpawn()
+    {
+        enemyinfrontofpawn = true;
     }
 
     public String getPiece()
@@ -45,7 +59,16 @@ public class Cards
         //Pawn
         if(piece == 1)
         {
-            //needs position of enemy
+            int x = finalPOS[0] - initPOS[0];
+            int y = finalPOS[1] - initPOS[1];
+
+            if (!enemyinfrontofpawn && x==0 && y==1)
+                return true;
+            else if (pawncancapture && abs(x)==1 && y==1)
+                return true;
+            else
+                return false;
+
         }
 
         //Knight
@@ -54,7 +77,7 @@ public class Cards
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if ((abs(x) == 3 && abs(y) == 1) || (abs(y) == 3 && abs(x) == 1)){
+            if ((abs(x) == 2 && abs(y) == 1) || (abs(y) == 2 && abs(x) == 1)){
                 return true;
             }
             else{
@@ -110,7 +133,7 @@ public class Cards
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if (abs(x) <= 1 && abs(y) <= 1 ){
+            if (((abs(x) <= 1 || abs(y) <= 1)) && (abs(x) + abs(y) != 0)){
                 return true;
             }
             else{

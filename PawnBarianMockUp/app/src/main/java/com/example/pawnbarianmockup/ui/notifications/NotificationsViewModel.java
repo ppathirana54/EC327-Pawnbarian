@@ -10,7 +10,7 @@ public class NotificationsViewModel extends ViewModel {
 
     public NotificationsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("Credits:\nPriyan Pathirana\nAndrew Chen\nJaden Cho\nBenyamin Trachtenberg");
     }
 
     public LiveData<String> getText() {
