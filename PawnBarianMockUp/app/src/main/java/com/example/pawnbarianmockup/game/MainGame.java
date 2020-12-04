@@ -70,10 +70,10 @@ public class MainGame {
     {
         // Draw cards pick cards
         board.playerDraw();
-
-        board.movePlayer() // fill in variables here);
-
-        captureCheck();
+//
+//        board.movePlayer() // fill in variables here);
+//
+//        captureCheck();
 
 
     }
