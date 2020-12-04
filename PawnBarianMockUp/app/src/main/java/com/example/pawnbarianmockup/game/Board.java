@@ -41,7 +41,7 @@ public class Board
 
     public void movePlayer(int x, int y)
     {
-        player.move(x,y);
+        player.moveTo(x,y);
     }
 
     public int[] getEnemyPosition(int enemynumber)             // returns position of enemy number enemynumber
@@ -91,7 +91,7 @@ public class Board
 
     public void moveEnemy(int i, int xpos,int ypos)
     {
-        enemies.get(i).move(xpos,ypos);
+        enemies.get(i).moveTo(xpos,ypos);
     }
 
 

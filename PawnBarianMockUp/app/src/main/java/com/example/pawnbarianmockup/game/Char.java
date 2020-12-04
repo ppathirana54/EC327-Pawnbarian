@@ -12,31 +12,32 @@ public class Char
     // instance variables - replace the example below with your own
     private int pos[];
     private String name;
-    final int INITIAL_STARTING_POS = 2;
+    final int INITIAL_STARTING_POSx = 2;
+    final int INITIAL_STARTING_POSy = 1;
 
     /**
      * Constructor for objects of class Char
      */
     public Char()
     {
-        pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
+        pos = new int[]{INITIAL_STARTING_POSx,INITIAL_STARTING_POSy};
         this.name = "Dummy";
     }
 
     public Char(String init_name)
     {
-        pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
+        pos = new int[]{INITIAL_STARTING_POSx,INITIAL_STARTING_POSy};
         this.name = init_name;
 
     }
 
-
+/*
     public Char(int xpos, int ypos, String init_name)
     {
         pos = new int[]{xpos,ypos};
         this.name = init_name;
     }
-
+*/
     public int[] getPos()
     {
         return pos;

@@ -8,4 +8,6 @@
     <string name="instructions">Instructions:Use corresponding cards below to move, try to stay alive</string>
     <string name="todo">TODO</string>
     <string name="EndTurn">END TURN</string>
+    <string name="Your_Turn"> Start Your Turn</string>
+    <string name="Enemy_Turn">End Your Turn</string>
 </resources>

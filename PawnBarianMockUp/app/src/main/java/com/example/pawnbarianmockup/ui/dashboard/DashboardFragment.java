@@ -1,19 +1,24 @@
 package com.example.pawnbarianmockup.ui.dashboard;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import static java.lang.Math.abs;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.example.pawnbarianmockup.R;
 import com.example.pawnbarianmockup.game.Cards;
@@ -60,6 +65,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     private Button EndTurn;
 
+    private ImageView Heart0;
+    private ImageView Heart1;
+    private ImageView Heart2;
+
     private int card1 = 0,
             card2 = 0,
             card3 = 0,
@@ -67,19 +76,30 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     private int cardpress1,
                 cardpress2,
-                cardpress3;
+                cardpress3,
+                cardactive1,
+                cardactive2,
+                cardactive3;
 
-    private int Pos[] = {2, 2};
+    private int Pos[] = {2, 1};
     private int PastPos[];
 
     private int tileset;
 
     boolean turn = true;
 
-    int [][] EnemyPos;
+    int EnemyPos[] = {2, 4};
+    int [] NewEnemyPos;
+    MainGame game = new MainGame();
+
+    private int health = 3;
+
+    boolean EnemyMove = true;
+
 
     private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>();
 
+    private Hashtable<Integer, Integer> int_to_id = new Hashtable<Integer, Integer>();
 
     private DashboardViewModel dashboardViewModel;
 
@@ -138,6 +158,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         EndTurn = (Button) getActivity().findViewById(R.id.endturn);
 
+        Heart0 = (ImageView) getActivity().findViewById(R.id.heart0);
+        Heart1 = (ImageView) getActivity().findViewById(R.id.heart1);
+        Heart2 = (ImageView) getActivity().findViewById(R.id.heart2);
+
         Buttona0.setOnClickListener(this);
         Buttona1.setOnClickListener(this);
         Buttona2.setOnClickListener(this);
@@ -170,7 +194,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         EndTurn.setOnClickListener(this);
 
-        Buttonc2.setImageResource(R.drawable.barbarian);
+        Buttond2.setImageResource(R.drawable.barbarian);
 
         int     bishop = R.drawable.bishop,
                 king = R.drawable.king,
@@ -193,33 +217,98 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         card2 = 1;
         card3 = 4;
 
-        MainGame game = new MainGame();
-        game.NewGame();
+        //MainGame game = new MainGame();
+        //game.NewGame();
 
-        EnemyPos = game.getEnemyPos();
+
         int_to_char.put(0, 'e');
         int_to_char.put(1, 'd');
         int_to_char.put(2, 'c');
         int_to_char.put(3, 'b');
         int_to_char.put(4, 'a');
 
+        int_to_id.put(1, R.drawable.pawn);
+        int_to_id.put(2, R.drawable.knight);
+        int_to_id.put(3, R.drawable.bishop);
+        int_to_id.put(4, R.drawable.rook);
+        int_to_id.put(5, R.drawable.queen);
+        int_to_id.put(6, R.drawable.king);
+
+        //Spawning Enemies in intial positions
+        ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
+        button1.setImageResource(skeleton);
+        //ImageButton button2 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 0, "id", this.requireActivity().getPackageName()));
+        //button2.setImageResource(skeleton);
+        //ImageButton button3 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 4, "id", this.requireActivity().getPackageName()));
+        //button3.setImageResource(skeleton);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onClick(View v){
         //Buttona0.setImageResource(R.drawable.barbarian);
 
         Cards cards = new Cards(1); //get access to Card class functions
+        //game.NewGame();
+
         int skeleton = R.drawable.skeleton;
+        int tile;
+
         //End Turn
         switch(v.getId()){ //End turn Button
+            //End of turn actions, Enemy move, Damage calculation
             case R.id.endturn:{
-                turn = !turn;
-                ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 2, "id", this.requireActivity().getPackageName()));
-                button1.setImageResource(skeleton);
-                ImageButton button2 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'd' + 3, "id", this.requireActivity().getPackageName()));
-                button2.setImageResource(skeleton);
-                ImageButton button3 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'e' + 4, "id", this.requireActivity().getPackageName()));
-                button3.setImageResource(skeleton);
+                turn = !turn; //Check if it is the Player's turn
+                if (turn == false) {
+                    EndTurn.setText(R.string.Your_Turn); //Change text on button
+                    NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
+                    char t, p;
+                    t = int_to_char.get(NewEnemyPos[1]);
+                    p = int_to_char.get(EnemyPos[1]);
+                    EnemyMove = game.canEnemyMove(Pos, EnemyPos);
+                    if (EnemyMove == false) {
+                        ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
+                        button.setImageResource(skeleton);
+                        if (((EnemyPos[1] == 0 || EnemyPos[1] == 2 || EnemyPos[1] == 4) && (EnemyPos[0] == 0 || EnemyPos[0] == 2 || EnemyPos[0] == 4)) || ((EnemyPos[1] == 1 || EnemyPos[1] == 3) && (EnemyPos[0] == 1 || EnemyPos[0] == 3))) {
+                            tile = R.drawable.darktile;
+                        } else {
+                            tile = R.drawable.tile;
+                        }
+                        ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
+                        button1.setImageResource(tile);
+                        EnemyPos = NewEnemyPos;
+                    }
+                    else{
+                        health = health - 1;
+                    }
+
+                    if (health == 2){
+                        Heart0.setImageResource(R.drawable.emptyheart);
+                    }
+                    else if (health == 1){
+                        Heart0.setImageResource(R.drawable.emptyheart);
+                        Heart1.setImageResource(R.drawable.emptyheart);
+                    }
+                    else if (health == 0){
+                        Heart0.setImageResource(R.drawable.emptyheart);
+                        Heart1.setImageResource(R.drawable.emptyheart);
+                        Heart2.setImageResource(R.drawable.emptyheart);
+                    }
+                }
+
+                else{
+                    EndTurn.setText(R.string.Enemy_Turn);
+                    int nextCard1 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+                    int nextCard2 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+                    int nextCard3 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+
+                    card1 = nextCard1;
+                    card2 = nextCard2;
+                    card3 = nextCard3;
+
+                    Card1.setImageResource(int_to_id.get(nextCard1));
+                    Card2.setImageResource(int_to_id.get(nextCard2));
+                    Card3.setImageResource(int_to_id.get(nextCard3));
+                }
             }
         }
 
@@ -230,6 +319,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress1 = 1;
                     cardpress2 = 0;
                     cardpress3 = 0;
+                    cardactive1 = 1;
+                    cardactive2 = 0;
+                    cardactive3 = 0;
                 }
                 else{
                     cardpress1 = 0;
@@ -243,6 +335,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress1 = 0;
                     cardpress2 = 1;
                     cardpress3 = 0;
+                    cardactive1 = 0;
+                    cardactive2 = 1;
+                    cardactive3 = 0;
                 }
                 else{
                     cardpress1 = 0;
@@ -256,6 +351,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 1;
+                    cardactive1 = 0;
+                    cardactive2 = 0;
+                    cardactive3 = 1;
                 }
                 else{
                     cardpress1 = 0;
