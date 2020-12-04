@@ -1,5 +1,5 @@
 package com.example.pawnbarianmockup.game; /**
-/**
+ /**
  * Creates an object of the Piece Cards, contains the type.
  *
  * Need to implement a method to return potential moves
@@ -44,12 +44,12 @@ public class Cards
         enemyinfrontofpawn = true;
     }
 
-    public int getPiece()
+    public String getPiece()
     {
-        return piece;
+        return piecesList.get(piece);
     }
 
-    public void setPeice(int piece)
+    public void setPiece(int piece)
     {
         this.piece = piece;
     }
@@ -133,10 +133,7 @@ public class Cards
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if ((abs(x) + abs(y)) == 1){
-                return true;
-            }
-            else if ((abs(x) == 1 && abs(y) == 1)){
+            if (((abs(x) <= 1 || abs(y) <= 1)) && (abs(x) + abs(y) != 0)){
                 return true;
             }
             else{

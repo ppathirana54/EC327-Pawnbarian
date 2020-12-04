@@ -1,7 +1,7 @@
 package com.example.pawnbarianmockup.game;
 /**
- * Creates the board class. Has a list of the number of enemies and creates a player. 
- * 
+ * Creates the board class. Has a list of the number of enemies and creates a player.
+ *
  * Need to implement alot tbh
  *
  */
@@ -14,6 +14,7 @@ public class Board
     // array list of enemies and player
     private ArrayList<Enemy> enemies;
     private Player player;
+
 
     public Board()                                              // board constructor
     {
@@ -28,11 +29,12 @@ public class Board
 
     public void makeEnemy(int x, int y)                        // makes a new enemy at location (x,y)
     {
-        enemies.add(new Enemy());
+        Enemy NEnemy = new Enemy();
+        enemies.add(NEnemy);
         enemies.get(getNumEnemies() - 1).moveTo(x,y);
     }
 
-    public int[] getPlayerPosition()                           // returns playes position
+    public int[] getPlayerPosition()                           // returns player position
     {
         return player.getPos();
     }
@@ -51,7 +53,7 @@ public class Board
     {
         return player.getHealth();
     }
-    
+
     public void captureEnemy()                                // deletes enemy that is captured
     {
         for (int i=0;i<getNumEnemies();i++)
@@ -92,10 +94,10 @@ public class Board
         enemies.get(i).move(xpos,ypos);
     }
 
-    public int[] playerDraw()
-    {
-        return player.draw();
-    }
 
 
 }
+
+
+
+

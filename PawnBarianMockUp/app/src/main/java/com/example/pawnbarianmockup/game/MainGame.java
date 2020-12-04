@@ -2,12 +2,19 @@ package com.example.pawnbarianmockup.game;
 
 import java.util.Random;
 import java.lang.Integer;
+import java.util.ArrayList;
 import static java.lang.Math.abs;
 
 public class MainGame {
 
-    private Board board;
+    protected Board board;
 
+    //public ArrayList<Char> EnemyPos;
+
+    public void NewGame(){
+        board = new Board();
+        restartRound();
+    }
 
     public void restartRound()
     {
@@ -23,6 +30,18 @@ public class MainGame {
             board.makeEnemy(xpos, ypos);
 
         }
+    }
+
+    public int[][] getEnemyPos(){
+        int enemynum = board.getNumberEnemies();
+        int [][] Rarr = new int [enemynum][2];
+        int []temp;
+        for (int i = 0; i < enemynum; i++){
+            temp = board.getEnemyPos(i);
+            Rarr[i][0] = temp[0];
+            Rarr[i][1] = temp[1];
+        }
+        return Rarr;
     }
 
 
@@ -66,17 +85,16 @@ public class MainGame {
     }
 
 
-    public void playerTurn()
-    {
-        // Draw cards pick cards
-        board.playerDraw();
-//
-//        board.movePlayer() // fill in variables here);
+//    public void playerTurn()
+//    {
+//        // Draw cards pick cards
+//        if(board.)
+//        board.movePlayer( // fill in variables here);
 //
 //        captureCheck();
-
-
-    }
+//
+//
+//    }
 
     public boolean roundOver()
     {

@@ -13,7 +13,7 @@ import static java.lang.Math.abs;
 public class Enemy extends Char
 {
     private int health;
-    
+
     public Enemy()                          // Enemy constructor
     {
         setName("Skeleton");

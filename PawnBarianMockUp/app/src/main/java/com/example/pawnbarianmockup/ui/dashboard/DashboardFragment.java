@@ -17,6 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pawnbarianmockup.R;
 import com.example.pawnbarianmockup.game.Cards;
+import com.example.pawnbarianmockup.game.Board;
+import com.example.pawnbarianmockup.game.Char;
+import com.example.pawnbarianmockup.game.Enemy;
+import com.example.pawnbarianmockup.game.MainGame;
+import com.example.pawnbarianmockup.game.Player;
+
+import java.util.Hashtable;
+
 
 public class DashboardFragment extends Fragment implements View.OnClickListener{
 
@@ -58,8 +66,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
             card;
 
     private int cardpress1,
-            cardpress2,
-            cardpress3;
+                cardpress2,
+                cardpress3;
 
     private int Pos[] = {2, 2};
     private int PastPos[];
@@ -67,6 +75,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private int tileset;
 
     boolean turn = true;
+
+    int [][] EnemyPos;
+
+    private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>();
 
 
     private DashboardViewModel dashboardViewModel;
@@ -165,7 +177,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 knight = R.drawable.knight,
                 pawn = R.drawable.pawn,
                 queen = R.drawable.queen,
-                rook = R.drawable.rook;
+                rook = R.drawable.rook,
+                skeleton = R.drawable.skeleton;
 
         Card1.setOnClickListener(this);
         Card2.setOnClickListener(this);
@@ -180,16 +193,33 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         card2 = 1;
         card3 = 4;
 
+        MainGame game = new MainGame();
+        game.NewGame();
+
+        EnemyPos = game.getEnemyPos();
+        int_to_char.put(0, 'e');
+        int_to_char.put(1, 'd');
+        int_to_char.put(2, 'c');
+        int_to_char.put(3, 'b');
+        int_to_char.put(4, 'a');
+
     }
 
     public void onClick(View v){
         //Buttona0.setImageResource(R.drawable.barbarian);
 
         Cards cards = new Cards(1); //get access to Card class functions
-
-        switch(v.getId()){
+        int skeleton = R.drawable.skeleton;
+        //End Turn
+        switch(v.getId()){ //End turn Button
             case R.id.endturn:{
                 turn = !turn;
+                ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 2, "id", this.requireActivity().getPackageName()));
+                button1.setImageResource(skeleton);
+                ImageButton button2 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'd' + 3, "id", this.requireActivity().getPackageName()));
+                button2.setImageResource(skeleton);
+                ImageButton button3 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'e' + 4, "id", this.requireActivity().getPackageName()));
+                button3.setImageResource(skeleton);
             }
         }
 
@@ -256,21 +286,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttona0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -313,21 +329,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttona1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -369,21 +371,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttona2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -425,21 +413,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttona3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -481,21 +455,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttona4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -537,21 +497,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonb0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -593,21 +539,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonb1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -649,21 +581,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonb2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -705,21 +623,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonb3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -761,21 +665,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonb4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -817,21 +707,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonc0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -873,21 +749,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonc1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -929,21 +791,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonc2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -985,21 +833,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonc3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1041,21 +875,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttonc4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1097,21 +917,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttond0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1153,21 +959,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttond1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1209,21 +1001,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttond2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1265,21 +1043,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttond3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1321,21 +1085,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttond4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1377,21 +1127,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttone0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1433,21 +1169,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttone1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1489,21 +1211,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttone2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1545,21 +1253,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttone3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }
@@ -1601,21 +1295,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 if (move) {
                     Buttone4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
-                    if (Pos[1] == 0){
-                        y = 'e';
-                    }
-                    else if (Pos[1] == 1){
-                        y = 'd';
-                    }
-                    else if (Pos[1] == 2){
-                        y = 'c';
-                    }
-                    else if (Pos[1] == 3){
-                        y = 'b';
-                    }
-                    else{
-                        y = 'a';
-                    }
+                    y = int_to_char.get(Pos[1]);
                     if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
                         tileset = R.drawable.darktile;
                     }

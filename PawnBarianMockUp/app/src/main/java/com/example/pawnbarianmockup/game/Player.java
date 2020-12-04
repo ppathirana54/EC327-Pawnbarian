@@ -25,56 +25,61 @@ public class Player extends Char
         setName("Player");
         health = 3;
         gold = 0;
+        ArrayList<Cards> deck = new ArrayList<Cards>();
+        ArrayList<Cards> hand = new ArrayList<Cards>();
+        ArrayList<Cards> discard = new ArrayList<Cards>();
 
+        Cards temp;
         for(int i = 0; i < 12; i++)
         {
-            deck.add(new Cards(i%12));
+            temp = new Cards(i%12);
+            deck.add(temp);
         }
 
         Collections.shuffle(deck);
 
     }
-    
+
     public void heal()
     {
         health++;
     }
-    
+
     public void heal(int amt)
     {
         health = health + amt;
     }
-    
+
     public void takeDamage()
     {
         health--;
     }
-    
+
     public void takeDamage(int amt)
     {
         health = health - amt;
     }
-    
+
     public void setHealth(int amt)
     {
         health = amt;
     }
-    
+
     public int getHealth()
     {
         return health;
     }
-    
+
     public void setWealth(int amt)
     {
         gold = amt;
     }
-    
+
     public void getGold(int amt)
     {
         gold = gold + amt;
     }
-    
+
     public int getWealth()
     {
         return gold;
@@ -85,38 +90,19 @@ public class Player extends Char
         Collections.shuffle(deck);
     }
 
-    public int[] draw()
+    public void draw()
     {
-        while(hand.size() < 3)
+        while(deck.size() < 3)
         {
             hand.add(deck.get(0));
             deck.remove(0);
         }
-
-        int returnArray[] = new int[3];
-
-
-        for(int i = 0; i < 3; i++)
-        {
-            returnArray[i] = hand.get(i).getPiece();
-        }
-
-        return returnArray;
     }
 
     public void play(int card)
     {
         discard.add(hand.get(card));
         hand.remove(card);
-    }
-
-    public void discardAll()
-    {
-        while(hand.size() > 0)
-        {
-            discard.add(hand.get(0));
-            hand.remove(0);
-        }
     }
 
     public void restock()

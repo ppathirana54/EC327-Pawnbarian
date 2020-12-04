@@ -10,8 +10,8 @@ package com.example.pawnbarianmockup.game;
 public class Char
 {
     // instance variables - replace the example below with your own
-    private int pos[]; 
-    private String name; 
+    private int pos[];
+    private String name;
     final int INITIAL_STARTING_POS = 2;
 
     /**
@@ -22,21 +22,21 @@ public class Char
         pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
         this.name = "Dummy";
     }
-    
+
     public Char(String init_name)
     {
         pos = new int[]{INITIAL_STARTING_POS,INITIAL_STARTING_POS};
         this.name = init_name;
-    
+
     }
-    
-    
+
+
     public Char(int xpos, int ypos, String init_name)
     {
         pos = new int[]{xpos,ypos};
         this.name = init_name;
     }
-    
+
     public int[] getPos()
     {
         return pos;
@@ -63,6 +63,6 @@ public class Char
     {
         name = newName;
     }
-    
-    
+
+
 }
