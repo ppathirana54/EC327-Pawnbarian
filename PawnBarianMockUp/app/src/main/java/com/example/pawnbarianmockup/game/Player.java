@@ -85,19 +85,38 @@ public class Player extends Char
         Collections.shuffle(deck);
     }
 
-    public void draw()
+    public int[] draw()
     {
-        while(deck.size() < 3)
+        while(hand.size() < 3)
         {
             hand.add(deck.get(0));
             deck.remove(0);
         }
+
+        int returnArray[] = new int[3];
+
+
+        for(int i = 0; i < 3; i++)
+        {
+            returnArray[i] = hand.get(i).getPiece();
+        }
+
+        return returnArray;
     }
 
     public void play(int card)
     {
         discard.add(hand.get(card));
         hand.remove(card);
+    }
+
+    public void discardAll()
+    {
+        while(hand.size() > 0)
+        {
+            discard.add(hand.get(0));
+            hand.remove(0);
+        }
     }
 
     public void restock()

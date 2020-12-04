@@ -66,16 +66,17 @@ public class MainGame {
     }
 
 
-//    public void playerTurn()
-//    {
-//        // Draw cards pick cards
-//        if(board.)
-//        board.movePlayer( // fill in variables here);
-//
-//        captureCheck();
-//
-//
-//    }
+    public void playerTurn()
+    {
+        // Draw cards pick cards
+        board.playerDraw();
+
+        board.movePlayer() // fill in variables here);
+
+        captureCheck();
+
+
+    }
 
     public boolean roundOver()
     {

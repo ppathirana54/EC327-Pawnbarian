@@ -92,6 +92,10 @@ public class Board
         enemies.get(i).move(xpos,ypos);
     }
 
+    public int[] playerDraw()
+    {
+        return player.draw();
+    }
 
 
 }

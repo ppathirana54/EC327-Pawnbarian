@@ -44,9 +44,9 @@ public class Cards
         enemyinfrontofpawn = true;
     }
 
-    public String getPiece()
+    public int getPiece()
     {
-        return piecesList.get(piece);
+        return piece;
     }
 
     public void setPeice(int piece)
