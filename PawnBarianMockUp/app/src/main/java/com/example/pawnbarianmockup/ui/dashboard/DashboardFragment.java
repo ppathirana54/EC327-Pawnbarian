@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pawnbarianmockup.R;
-import com.example.pawnbarianmockup.ui.notifications.Cards;
+import com.example.pawnbarianmockup.game.Cards;
 
 public class DashboardFragment extends Fragment implements View.OnClickListener{
 
@@ -49,19 +50,23 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private ImageButton Card2;
     private ImageButton Card3;
 
+    private Button EndTurn;
+
     private int card1 = 0,
-                card2 = 0,
-                card3 = 0,
-                card;
+            card2 = 0,
+            card3 = 0,
+            card;
 
     private int cardpress1,
-                cardpress2,
-                cardpress3;
+            cardpress2,
+            cardpress3;
 
     private int Pos[] = {2, 2};
     private int PastPos[];
 
     private int tileset;
+
+    boolean turn = true;
 
 
     private DashboardViewModel dashboardViewModel;
@@ -119,6 +124,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Card2 = (ImageButton) getActivity().findViewById(R.id.imageButton2);
         Card3 = (ImageButton) getActivity().findViewById(R.id.imageButton3);
 
+        EndTurn = (Button) getActivity().findViewById(R.id.endturn);
+
         Buttona0.setOnClickListener(this);
         Buttona1.setOnClickListener(this);
         Buttona2.setOnClickListener(this);
@@ -149,6 +156,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Buttone3.setOnClickListener(this);
         Buttone4.setOnClickListener(this);
 
+        EndTurn.setOnClickListener(this);
+
         Buttonc2.setImageResource(R.drawable.barbarian);
 
         int     bishop = R.drawable.bishop,
@@ -165,37 +174,64 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         //Randomly assign new cards at the start of new turn
         Card1.setImageResource(knight); //For now just change the name for the picture
         Card2.setImageResource(pawn);
-        Card3.setImageResource(queen);
+        Card3.setImageResource(rook);
 
         card1 = 2; //For now just change the number based on the number assigned in the Cards class
         card2 = 1;
-        card3 = 5;
+        card3 = 4;
 
     }
 
     public void onClick(View v){
         //Buttona0.setImageResource(R.drawable.barbarian);
 
-        Cards cards = new Cards(); //get access to Card class functions
+        Cards cards = new Cards(1); //get access to Card class functions
 
-        //Selector for the move cards
+        switch(v.getId()){
+            case R.id.endturn:{
+                turn = !turn;
+            }
+        }
+
+        //Selector for the move card
         switch(v.getId()){
             case R.id.imageButton:{
-                cardpress1 = 1;
-                cardpress2 = 0;
-                cardpress3 = 0;
+                if (turn){
+                    cardpress1 = 1;
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
+                else{
+                    cardpress1 = 0;
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
                 break;
             }
             case R.id.imageButton2:{
-                cardpress1 = 0;
-                cardpress2 = 1;
-                cardpress3 = 0;
+                if (turn){
+                    cardpress1 = 0;
+                    cardpress2 = 1;
+                    cardpress3 = 0;
+                }
+                else{
+                    cardpress1 = 0;
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
                 break;
             }
             case R.id.imageButton3:{
-                cardpress1 = 0;
-                cardpress2 = 0;
-                cardpress3 = 1;
+                if (turn){
+                    cardpress1 = 0;
+                    cardpress2 = 0;
+                    cardpress3 = 1;
+                }
+                else{
+                    cardpress1 = 0;
+                    cardpress2 = 0;
+                    cardpress3 = 0;
+                }
                 break;
             }
         }
