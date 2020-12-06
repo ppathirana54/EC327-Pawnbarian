@@ -155,8 +155,8 @@ public class Cards
     //Picks the next random piece card for the player
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public int newCard(int progression){
-        if (progression < 36){
-            return ThreadLocalRandom.current().nextInt(1, 6 + progression/2 + 1);
+        if (progression <= 24){
+            return ThreadLocalRandom.current().nextInt(1,6+progression/2 + 1);
         }
         else{
             return ThreadLocalRandom.current().nextInt(1, 18 + 1);
