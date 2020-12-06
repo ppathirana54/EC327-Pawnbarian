@@ -91,7 +91,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     boolean turn = true; //Variable for player turn
 
-    int numMoves = 3; //Number of moves per turn, dictates amount of energy
+    int numMoves = 2; //Number of moves per turn, dictates amount of energy
 
     int Energy[]; //Variable for energy
 
@@ -107,6 +107,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     boolean EnemyAlive1 = true; //Variable for enemy existence
 
     boolean gameOver = false; //Game over?
+
+    int progression = 0;
 
 
     private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>(); //Hashtable for temp button calls
@@ -245,6 +247,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         int_to_id.put(4, R.drawable.rook);
         int_to_id.put(5, R.drawable.queen);
         int_to_id.put(6, R.drawable.king);
+        int_to_id.put(7, R.drawable.blank);
+        int_to_id.put(8, R.drawable.blank);
+        int_to_id.put(9, R.drawable.blank);
+
 
         //Spawning Enemies in initial positions
         ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
@@ -267,12 +273,14 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
             //End of turn actions, Enemy move, Damage calculation
             case R.id.endturn:{
                 if (gameOver == false){
+
                     turn = !turn; //Check if it is the Player's turn
                     if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]) { //Check if enemy is alive
                         EnemyAlive1 = false;
+                        progression += 1;
                     }
                     if (turn == false) { //If not player's turn...
-                        numMoves = 3; //Reset number of moves to max
+                        numMoves = 2; //Reset number of moves to max
                         EndTurn.setText(R.string.Your_Turn); //Change text on button
                         if (EnemyAlive1 == true) { //If enemy is alive...
                             NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
@@ -316,9 +324,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                             button.setImageResource(skeleton); //Set enemy in respawn location
                         }
 
-                        int nextCard1 = cards.newCard(); //Set piece cards to new pieces
-                        int nextCard2 = cards.newCard();
-                        int nextCard3 = cards.newCard();
+                        int nextCard1 = cards.newCard(progression); //Set piece cards to new pieces
+                        int nextCard2 = cards.newCard(progression);
+                        int nextCard3 = cards.newCard(progression);
 
                         card1 = nextCard1; //Update piece card variables for getMovement function
                         card2 = nextCard2;
@@ -328,7 +336,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                         Card2.setImageResource(int_to_id.get(nextCard2));
                         Card3.setImageResource(int_to_id.get(nextCard3));
 
-                        Energy0.setImageResource(R.drawable.energy); //Reset energy for start of new turn
+                        Energy0.setImageResource(R.drawable.white); //Reset energy for start of new turn
                         Energy1.setImageResource(R.drawable.energy);
                         Energy2.setImageResource(R.drawable.energy);
                     }
