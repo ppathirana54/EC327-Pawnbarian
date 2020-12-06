@@ -22,7 +22,8 @@ public class Cards
 {
     private Hashtable<Integer, String> piecesList = new Hashtable<Integer, String>();
     private int piece;
-    private static boolean pawncancapture;
+    private static boolean pawncancaptureleft;
+    private static boolean pawncancaptureright;
     private static boolean enemyinfrontofpawn;
     // private ArrayList<String> mods?
 
@@ -35,14 +36,19 @@ public class Cards
         piecesList.put(5, "Queen");
         piecesList.put(6, "King");
 
-        pawncancapture = false;
+        pawncancaptureleft = false;
+        pawncancaptureright = false;
         enemyinfrontofpawn = false;
 
         this.piece = piece;
     }
-    public void set_pawncancapture()
+    public void set_pawncancaptureleft()
     {
-        pawncancapture = true;
+        pawncancaptureleft = true;
+    }
+    public void set_pawncancaptureright()
+    {
+        pawncancaptureright = true;
     }
 
     public void set_enemyinfrontofpawn()
@@ -65,7 +71,9 @@ public class Cards
 
             if (!enemyinfrontofpawn && x==0 && y==1)
                 return true;
-            else if (pawncancapture && abs(x)==1 && y==1)
+            else if (pawncancaptureleft && x==-1 && y==1)
+                return true;
+            else if (pawncancaptureright && x==1 && y==1)
                 return true;
             else
                 return false;

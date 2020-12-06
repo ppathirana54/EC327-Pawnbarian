@@ -96,6 +96,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     int numMoves = 2; //Number of moves per turn, dictates amount of energy
 
+    int enemies_defeated=0; // counter for number of enemies defeated
+
     int Energy[]; //Variable for energy
 
     int EnemyPos[] = {2, 4}; //Enemy position
@@ -287,7 +289,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     turn = !turn; //Check if it is the Player's turn
                     if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]) { //Check if enemy is alive
                         EnemyAlive1 = false;
-                        progression += 1;
+                        enemies_defeated +=1;  //increment counter for number of enemies killed
+                        TextView text = getActivity().findViewById(R.id.text_dashboard);
+                        text.setText("Kill Counter:"+enemies_defeated/2); //Change text on button
+                        progression += 1;   //makes game harder every time a slime is captured
                     }
                     if (turn == false) { //If not player's turn...
                         numMoves = 2; //Reset number of moves to max
@@ -321,6 +326,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                             Heart2.setImageResource(R.drawable.emptyheart);
 
                             gameOver = true;
+                            Toast.makeText(this.getActivity(), "Good Job! You defeated " + enemies_defeated/2 +" slimes", Toast.LENGTH_LONG).show();
                             Toast.makeText(this.getActivity(), "Maybe if you tried harder you wouldn't lose!\n\n-Blob the slime", Toast.LENGTH_LONG).show();
 
                             Intent gameOverIntent = new Intent(getActivity(), GameOverActivity.class);
@@ -430,12 +436,40 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos1[] = {0, 4}; //Coordinates of tile
                 if (cardpress1 == 1){ //Check which piece card is pressed
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
+                    
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -473,12 +507,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos2[] = {1, 4}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -515,12 +576,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos3[] = {2, 4}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -557,12 +645,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos4[] = {3, 4}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -599,12 +714,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos5[] = {4, 4}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -641,12 +783,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos6[] = {0, 3}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -683,12 +852,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos7[] = {1, 3}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -725,12 +921,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos8[] = {2, 3}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -767,12 +990,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos9[] = {3, 3}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -809,12 +1059,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos10[] = {4, 3}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -851,12 +1128,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos11[] = {0, 2}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -893,12 +1197,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos12[] = {1, 2}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -935,12 +1266,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos13[] = {2, 2}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -977,12 +1335,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos14[] = {3, 2}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1019,12 +1404,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos15[] = {4, 2}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1061,12 +1473,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos16[] = {0, 1}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1103,12 +1542,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos17[] = {1, 1}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1145,12 +1611,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos18[] = {2, 1}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1187,12 +1680,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos19[] = {3, 1}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1229,12 +1749,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos20[] = {4, 1}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1271,12 +1818,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos21[] = {0, 0}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1313,12 +1887,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos22[] = {1, 0}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1355,12 +1956,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos23[] = {2, 0}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1397,12 +2025,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos24[] = {3, 0}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
@@ -1439,12 +2094,39 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 int FinalPos25[] = {4, 0}; //Coordinates of tile
                 if (cardpress1 == 1){
                     card = card1;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress2 == 1){
                     card = card2;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else if (cardpress3 == 1){
                     card = card3;
+                    if (card==1) 
+                    {
+                        if ((Pos[0] - EnemyPos[0]) == 1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureleft();
+                        else if ((Pos[0] - EnemyPos[0]) == -1 && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_pawncancaptureright();
+                        else if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1] - 1)
+                            cards.set_enemyinfrontofpawn();
+                    }
                 }
                 else{
                     card = 0;
