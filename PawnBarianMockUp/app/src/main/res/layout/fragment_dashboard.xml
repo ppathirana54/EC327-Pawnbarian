@@ -391,7 +391,7 @@
         android:layout_height="35dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/fullheart"
         app:layout_constraintStart_toStartOf="parent"
@@ -402,7 +402,7 @@
         android:id="@+id/heart1"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/fullheart"
         app:layout_constraintStart_toEndOf="@+id/heart0"
         app:layout_constraintTop_toBottomOf="@+id/imageButtone0"
@@ -412,7 +412,7 @@
         android:id="@+id/heart2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/fullheart"
         app:layout_constraintStart_toEndOf="@+id/heart1"
         app:layout_constraintTop_toBottomOf="@+id/imageButtone1"
@@ -430,5 +430,38 @@
         app:backgroundTint="#D83737"
         app:layout_constraintStart_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toBottomOf="@+id/imageButtone3" />
+
+    <ImageView
+        android:id="@+id/energy0"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/energy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heart0"
+        tools:ignore="ContentDescription"/>
+
+    <ImageView
+    android:id="@+id/energy1"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:layout_marginTop="6dp"
+    android:src="@drawable/energy"
+    app:layout_constraintStart_toEndOf="@+id/energy0"
+    app:layout_constraintTop_toBottomOf="@+id/heart0"
+    tools:ignore="ContentDescription"/>
+
+    <ImageView
+        android:id="@+id/energy2"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/energy"
+        app:layout_constraintStart_toEndOf="@+id/energy1"
+        app:layout_constraintTop_toBottomOf="@+id/heart0"
+        tools:ignore="ContentDescription"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

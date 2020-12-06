@@ -7,7 +7,13 @@ package com.example.pawnbarianmockup.game; /**
  */
 
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.Hashtable;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static java.lang.Math.abs;
 //import java.util.ArrayList;
 
@@ -16,8 +22,8 @@ public class Cards
 {
     private Hashtable<Integer, String> piecesList = new Hashtable<Integer, String>();
     private int piece;
-    private boolean pawncancapture;
-    private boolean enemyinfrontofpawn;
+    private static boolean pawncancapture;
+    private static boolean enemyinfrontofpawn;
     // private ArrayList<String> mods?
 
     public Cards(int piece)
@@ -54,8 +60,11 @@ public class Cards
         this.piece = piece;
     }
 
-    public boolean getMovement(int[] initPOS, int[] finalPOS, int piece)
+    public static boolean getMovement(int[] initPOS, int[] finalPOS, int piece)
     {
+        if (initPOS[0] == finalPOS[0] && initPOS[1] == finalPOS[1]){
+            return false;
+        }
         //Pawn
         if(piece == 1)
         {
@@ -133,7 +142,7 @@ public class Cards
             int x = finalPOS[0] - initPOS[0];
             int y = finalPOS[1] - initPOS[1];
 
-            if (((abs(x) <= 1 || abs(y) <= 1)) && (abs(x) + abs(y) != 0)){
+            if ((abs(x) == 1 && abs(y) == 0) || (abs(x) == 0 && abs(y) == 1) || ((abs(x) + abs(y) == 2) && (abs(x) != 0 && abs(y) != 0))){
                 return true;
             }
             else{
@@ -141,5 +150,10 @@ public class Cards
             }
         }
         return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public int newCard(){
+        return ThreadLocalRandom.current().nextInt(1, 6 + 1);
     }
 }

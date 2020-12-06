@@ -1,13 +1,28 @@
 package com.example.pawnbarianmockup.game;
 
+import android.os.Build;
+import android.text.style.ReplacementSpan;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.pawnbarianmockup.R;
+
+import java.util.Hashtable;
 import java.util.Random;
 import java.lang.Integer;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static java.lang.Math.abs;
 
 public class MainGame {
 
     protected Board board;
+
+    private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>();
+
 
     //public ArrayList<Char> EnemyPos;
 
@@ -123,9 +138,50 @@ public class MainGame {
     // Draw and display cards
 
 
-    public void captureCheck()
-    {
-        board.captureEnemy();
+    public boolean captureCheck(int []Player, int []Enemy){
+        if (Player[0] == Enemy[0] && Player[1] == Enemy[1]){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public int[] respawn(boolean isAlive, int[] EnemyPos, int[] Pos){
+        int[] RespawnPos = new int[2];
+        int respawn;
+        if (isAlive == false){
+            respawn = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+
+            if (respawn == 1){
+                RespawnPos[0] = 0;
+                RespawnPos[1] = 0;
+            }
+            else if (respawn == 2){
+                RespawnPos[0] = 0;
+                RespawnPos[1] = 4;
+            }
+            else if (respawn == 3){
+                RespawnPos[0] = 4;
+                RespawnPos[1] = 0;
+            }
+            else if (respawn == 4){
+                RespawnPos[0] = 4;
+                RespawnPos[1] = 4;
+            }
+
+            if (RespawnPos[0] == Pos[0] && RespawnPos[1] == Pos[1]){
+                RespawnPos[0] = 2;
+                RespawnPos[1] = 2;
+            }
+            return RespawnPos;
+        }
+        else{
+            RespawnPos[0] = EnemyPos[0];
+            RespawnPos[1] = EnemyPos[1];
+            return RespawnPos;
+        }
     }
 
 
@@ -162,5 +218,41 @@ public class MainGame {
         else{
             return false;
         }
+    }
+
+    public int Pos_to_id(int []Pos){
+        int tile;
+        if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))) {
+           tile = R.drawable.darktile;
+        } else {
+           tile = R.drawable.tile;
+        }
+        return tile;
+    }
+
+    public int[] energySymbol(int numMoves){
+        int [] energySym = new int[3];
+
+        if (numMoves == 3){
+            energySym[0] = R.drawable.energy;
+            energySym[1] = R.drawable.energy;
+            energySym[2] = R.drawable.energy;
+        }
+        else if (numMoves == 2){
+            energySym[0] = R.drawable.white;
+            energySym[1] = R.drawable.energy;
+            energySym[2] = R.drawable.energy;
+        }
+        else if (numMoves == 1){
+            energySym[0] = R.drawable.white;
+            energySym[1] = R.drawable.white;
+            energySym[2] = R.drawable.energy;
+        }
+        else{
+            energySym[0] = R.drawable.white;
+            energySym[1] = R.drawable.white;
+            energySym[2] = R.drawable.white;
+        }
+        return energySym;
     }
 }

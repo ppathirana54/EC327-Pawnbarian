@@ -69,6 +69,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private ImageView Heart1;
     private ImageView Heart2;
 
+    private ImageView Energy0;
+    private ImageView Energy1;
+    private ImageView Energy2;
+
     private int card1 = 0,
             card2 = 0,
             card3 = 0,
@@ -88,13 +92,21 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     boolean turn = true;
 
+    int numMoves = 3;
+
+    int Energy[];
+
     int EnemyPos[] = {2, 4};
     int [] NewEnemyPos;
+
+    int [] Movement = new int [11];
     MainGame game = new MainGame();
 
     private int health = 3;
 
     boolean EnemyMove = true;
+
+    boolean EnemyAlive1 = true;
 
 
     private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>();
@@ -161,6 +173,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Heart0 = (ImageView) getActivity().findViewById(R.id.heart0);
         Heart1 = (ImageView) getActivity().findViewById(R.id.heart1);
         Heart2 = (ImageView) getActivity().findViewById(R.id.heart2);
+
+        Energy0 = (ImageView) getActivity().findViewById(R.id.energy0);
+        Energy1 = (ImageView) getActivity().findViewById(R.id.energy1);
+        Energy2 = (ImageView) getActivity().findViewById(R.id.energy2);
 
         Buttona0.setOnClickListener(this);
         Buttona1.setOnClickListener(this);
@@ -234,7 +250,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         int_to_id.put(5, R.drawable.queen);
         int_to_id.put(6, R.drawable.king);
 
-        //Spawning Enemies in intial positions
+        //Spawning Enemies in initial positions
         ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
         button1.setImageResource(skeleton);
         //ImageButton button2 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 0, "id", this.requireActivity().getPackageName()));
@@ -258,29 +274,30 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
             //End of turn actions, Enemy move, Damage calculation
             case R.id.endturn:{
                 turn = !turn; //Check if it is the Player's turn
+                if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]){
+                    EnemyAlive1 = false;
+                }
                 if (turn == false) {
+                    numMoves = 3;
                     EndTurn.setText(R.string.Your_Turn); //Change text on button
-                    NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
-                    char t, p;
-                    t = int_to_char.get(NewEnemyPos[1]);
-                    p = int_to_char.get(EnemyPos[1]);
-                    EnemyMove = game.canEnemyMove(Pos, EnemyPos);
-                    if (EnemyMove == false) {
-                        ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
-                        button.setImageResource(skeleton);
-                        if (((EnemyPos[1] == 0 || EnemyPos[1] == 2 || EnemyPos[1] == 4) && (EnemyPos[0] == 0 || EnemyPos[0] == 2 || EnemyPos[0] == 4)) || ((EnemyPos[1] == 1 || EnemyPos[1] == 3) && (EnemyPos[0] == 1 || EnemyPos[0] == 3))) {
-                            tile = R.drawable.darktile;
-                        } else {
-                            tile = R.drawable.tile;
-                        }
-                        ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                        button1.setImageResource(tile);
-                        EnemyPos = NewEnemyPos;
-                    }
-                    else{
-                        health = health - 1;
-                    }
+                    if (EnemyAlive1 == true) {
+                        NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
+                        char t, p;
+                        t = int_to_char.get(NewEnemyPos[1]);
+                        p = int_to_char.get(EnemyPos[1]);
+                        EnemyMove = game.canEnemyMove(Pos, EnemyPos);
 
+                        if (EnemyMove == false && EnemyAlive1 == true) {
+                            ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
+                            button.setImageResource(skeleton);
+                            tile = game.Pos_to_id(EnemyPos);
+                            ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
+                            button1.setImageResource(tile);
+                            EnemyPos = NewEnemyPos;
+                        } else {
+                            health = health - 1;
+                        }
+                    }
                     if (health == 2){
                         Heart0.setImageResource(R.drawable.emptyheart);
                     }
@@ -297,9 +314,19 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
                 else{
                     EndTurn.setText(R.string.Enemy_Turn);
-                    int nextCard1 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-                    int nextCard2 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-                    int nextCard3 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+
+                    EnemyPos = game.respawn(EnemyAlive1, EnemyPos, Pos);
+
+                    if (EnemyAlive1 == false){
+                        EnemyAlive1 = true;
+                        char q = int_to_char.get(EnemyPos[1]);
+                        ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + q + EnemyPos[0], "id", this.requireActivity().getPackageName()));
+                        button.setImageResource(skeleton);
+                    }
+
+                    int nextCard1 = cards.newCard();
+                    int nextCard2 = cards.newCard();
+                    int nextCard3 = cards.newCard();
 
                     card1 = nextCard1;
                     card2 = nextCard2;
@@ -308,6 +335,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Card1.setImageResource(int_to_id.get(nextCard1));
                     Card2.setImageResource(int_to_id.get(nextCard2));
                     Card3.setImageResource(int_to_id.get(nextCard3));
+
+                    Energy0.setImageResource(R.drawable.energy);
+                    Energy1.setImageResource(R.drawable.energy);
+                    Energy2.setImageResource(R.drawable.energy);
                 }
             }
         }
@@ -315,7 +346,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         //Selector for the move card
         switch(v.getId()){
             case R.id.imageButton:{
-                if (turn){
+                if (turn && numMoves > 0){
                     cardpress1 = 1;
                     cardpress2 = 0;
                     cardpress3 = 0;
@@ -331,7 +362,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.imageButton2:{
-                if (turn){
+                if (turn && numMoves > 0){
                     cardpress1 = 0;
                     cardpress2 = 1;
                     cardpress3 = 0;
@@ -347,7 +378,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.imageButton3:{
-                if (turn){
+                if (turn && numMoves > 0){
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 1;
@@ -382,15 +413,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos1, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttona0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos1; //Updating position
@@ -425,15 +456,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos2, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttona1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos2; //Updating position
@@ -467,15 +498,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos3, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttona2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos3; //Updating position
@@ -509,15 +540,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos4, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttona3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos4; //Updating position
@@ -551,15 +582,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos5, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttona4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos5; //Updating position
@@ -593,15 +624,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos6, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonb0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos6; //Updating position
@@ -635,15 +666,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos7, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonb1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos7; //Updating position
@@ -677,15 +708,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos8, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonb2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos8; //Updating position
@@ -719,15 +750,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos9, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonb3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos9;
@@ -761,15 +792,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos10, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonb4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos10; //Updating position
@@ -803,15 +834,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos11, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonc0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos11; //Updating position
@@ -845,15 +876,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos12, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonc1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos12;
@@ -887,15 +918,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos13, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonc2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos13; //Updating position
@@ -929,15 +960,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos14, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonc3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos14; //Updating position
@@ -971,15 +1002,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos15, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttonc4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos15; //Updating position
@@ -1013,15 +1044,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos16, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttond0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos16; //Updating position
@@ -1055,15 +1086,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos17, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttond1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos17; //Updating position
@@ -1097,15 +1128,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos18, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttond2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos18; //Updating position
@@ -1139,15 +1170,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos19, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttond3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos19; //Updating position
@@ -1181,15 +1212,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos20, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttond4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos20; //Updating position
@@ -1223,15 +1254,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos21, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttone0.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos21; //Updating position
@@ -1265,15 +1296,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos22, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttone1.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos22; //Updating position
@@ -1307,15 +1338,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos23, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttone2.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos23; //Updating position
@@ -1349,15 +1380,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos24, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttone3.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos24; //Updating position
@@ -1391,15 +1422,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 }
                 boolean move = cards.getMovement(Pos, FinalPos25, card); //Checking if movement is valid
                 if (move) {
+                    numMoves -= 1;
+                    Energy = game.energySymbol(numMoves);
+                    Energy0.setImageResource(Energy[0]);
+                    Energy1.setImageResource(Energy[1]);
+                    Energy2.setImageResource(Energy[2]);
                     Buttone4.setImageResource(R.drawable.barbarian); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
-                    if (((Pos[1] == 0 || Pos[1] == 2 || Pos[1] == 4) && (Pos[0] == 0 || Pos[0] == 2 || Pos[0] == 4)) || ((Pos[1] == 1 || Pos[1] == 3) && (Pos[0] == 1 || Pos[0] == 3))){
-                        tileset = R.drawable.darktile;
-                    }
-                    else{
-                        tileset = R.drawable.tile;
-                    }
+                    tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
                     button.setImageResource(tileset);
                     Pos = FinalPos25; //Updating position
