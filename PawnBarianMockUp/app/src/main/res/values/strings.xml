@@ -12,4 +12,6 @@
     <string name="Enemy_Turn">End Your Turn</string>
     <string name="Game_Over">GAME OVER</string>
     <string name="Play_Again">Play Again</string>
+    <string name="Instructions">Instructions</string>
+
 </resources>
