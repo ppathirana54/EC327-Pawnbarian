@@ -106,6 +106,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     boolean EnemyAlive1 = true; //Variable for enemy existence
 
+    boolean gameOver = false; //Game over?
+
 
     private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>(); //Hashtable for temp button calls
 
@@ -300,6 +302,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                         Heart0.setImageResource(R.drawable.emptyheart);
                         Heart1.setImageResource(R.drawable.emptyheart);
                         Heart2.setImageResource(R.drawable.emptyheart);
+
+                        gameOver = true;
                     }
                 }
 
@@ -337,7 +341,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         //Selector for the move card
         switch(v.getId()){ //Case/switch for buttons press of piece cards
             case R.id.imageButton:{
-                if (turn && numMoves > 0){ //Check if it's player's turn and still have moves left
+                if (turn && numMoves > 0 && gameOver == false){ //Check if it's player's turn and still have moves left
                     cardpress1 = 1;
                     cardpress2 = 0;
                     cardpress3 = 0;
@@ -353,7 +357,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 break; //Identical functionality for all 3 piece cards
             }
             case R.id.imageButton2:{
-                if (turn && numMoves > 0){
+                if (turn && numMoves > 0 && gameOver == false){
                     cardpress1 = 0;
                     cardpress2 = 1;
                     cardpress3 = 0;
@@ -369,7 +373,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.imageButton3:{
-                if (turn && numMoves > 0){
+                if (turn && numMoves > 0 && gameOver == false){
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 1;
