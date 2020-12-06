@@ -73,45 +73,45 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private ImageView Energy1;
     private ImageView Energy2;
 
-    private int card1 = 0,
-            card2 = 0,
-            card3 = 0,
-            card;
+    private int card1 = 0, //Variable for each piece card
+                card2 = 0,
+                card3 = 0,
+                card;
 
-    private int cardpress1,
+    private int cardpress1, //Variable to see if card selector is pressed
                 cardpress2,
                 cardpress3,
                 cardactive1,
                 cardactive2,
                 cardactive3;
 
-    private int Pos[] = {2, 1};
-    private int PastPos[];
+    private int Pos[] = {2, 1}; //Player position
 
-    private int tileset;
+    private int tileset; //Variable for tile id
 
-    boolean turn = true;
+    boolean turn = true; //Variable for player turn
 
-    int numMoves = 3;
+    int numMoves = 3; //Number of moves per turn, dictates amount of energy
 
-    int Energy[];
+    int Energy[]; //Variable for energy
 
-    int EnemyPos[] = {2, 4};
+    int EnemyPos[] = {2, 4}; //Enemy position
     int [] NewEnemyPos;
 
-    int [] Movement = new int [11];
-    MainGame game = new MainGame();
+    MainGame game = new MainGame(); //Access to MainGame class
 
-    private int health = 3;
+    private int health = 3; //Health of player
 
-    boolean EnemyMove = true;
+    boolean EnemyMove = true; //Variable for enemy movement
 
-    boolean EnemyAlive1 = true;
+    boolean EnemyAlive1 = true; //Variable for enemy existence
+
+    boolean gameOver = false; //Game over?
 
 
-    private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>();
+    private Hashtable<Integer, Character> int_to_char = new Hashtable<Integer, Character>(); //Hashtable for temp button calls
 
-    private Hashtable<Integer, Integer> int_to_id = new Hashtable<Integer, Integer>();
+    private Hashtable<Integer, Integer> int_to_id = new Hashtable<Integer, Integer>(); //Hashtable for drawable id calls
 
     private DashboardViewModel dashboardViewModel;
 
@@ -132,9 +132,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     }
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) { //Creating image buttons and mapping them
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Buttona0 = (ImageButton) getActivity().findViewById(R.id.imageButtona0);
+        Buttona0 = (ImageButton) getActivity().findViewById(R.id.imageButtona0); //Creating image buttons and mapping them
         Buttona1 = (ImageButton) getActivity().findViewById(R.id.imageButtona1);
         Buttona2 = (ImageButton) getActivity().findViewById(R.id.imageButtona2);
         Buttona3 = (ImageButton) getActivity().findViewById(R.id.imageButtona3);
@@ -170,7 +170,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         EndTurn = (Button) getActivity().findViewById(R.id.endturn);
 
-        Heart0 = (ImageView) getActivity().findViewById(R.id.heart0);
+        Heart0 = (ImageView) getActivity().findViewById(R.id.heart0); //Setting images for health and energy
         Heart1 = (ImageView) getActivity().findViewById(R.id.heart1);
         Heart2 = (ImageView) getActivity().findViewById(R.id.heart2);
 
@@ -178,7 +178,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Energy1 = (ImageView) getActivity().findViewById(R.id.energy1);
         Energy2 = (ImageView) getActivity().findViewById(R.id.energy2);
 
-        Buttona0.setOnClickListener(this);
+        Buttona0.setOnClickListener(this); //OnClicker for buttons
         Buttona1.setOnClickListener(this);
         Buttona2.setOnClickListener(this);
         Buttona3.setOnClickListener(this);
@@ -210,9 +210,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         EndTurn.setOnClickListener(this);
 
-        Buttond2.setImageResource(R.drawable.barbarian);
+        Buttond2.setImageResource(R.drawable.barbarian); //Setting initial player position
 
-        int     bishop = R.drawable.bishop,
+        int     bishop = R.drawable.bishop, //Id for pieces
                 king = R.drawable.king,
                 knight = R.drawable.knight,
                 pawn = R.drawable.pawn,
@@ -220,30 +220,26 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 rook = R.drawable.rook,
                 skeleton = R.drawable.skeleton;
 
-        Card1.setOnClickListener(this);
+        Card1.setOnClickListener(this); //Setting card selector buttons
         Card2.setOnClickListener(this);
         Card3.setOnClickListener(this);
 
-        //Randomly assign new cards at the start of new turn
-        Card1.setImageResource(knight); //For now just change the name for the picture
+
+        Card1.setImageResource(knight); //Initial piece cards
         Card2.setImageResource(pawn);
-        Card3.setImageResource(rook);
+        Card3.setImageResource(king);
 
-        card1 = 2; //For now just change the number based on the number assigned in the Cards class
+        card1 = 2; //Piece id for getMovement function
         card2 = 1;
-        card3 = 4;
+        card3 = 6;
 
-        //MainGame game = new MainGame();
-        //game.NewGame();
-
-
-        int_to_char.put(0, 'e');
+        int_to_char.put(0, 'e'); //Loading hashtable
         int_to_char.put(1, 'd');
         int_to_char.put(2, 'c');
         int_to_char.put(3, 'b');
         int_to_char.put(4, 'a');
 
-        int_to_id.put(1, R.drawable.pawn);
+        int_to_id.put(1, R.drawable.pawn); //Loading hashtable
         int_to_id.put(2, R.drawable.knight);
         int_to_id.put(3, R.drawable.bishop);
         int_to_id.put(4, R.drawable.rook);
@@ -261,44 +257,41 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onClick(View v){
-        //Buttona0.setImageResource(R.drawable.barbarian);
+        Cards cards = new Cards(1); //Get access to Card class functions
 
-        Cards cards = new Cards(1); //get access to Card class functions
-        //game.NewGame();
-
-        int skeleton = R.drawable.skeleton;
-        int tile;
+        int skeleton = R.drawable.skeleton; //Set id for enemy drawable
+        int tile; //Variable for tile drawable
 
         //End Turn
         switch(v.getId()){ //End turn Button
             //End of turn actions, Enemy move, Damage calculation
             case R.id.endturn:{
                 turn = !turn; //Check if it is the Player's turn
-                if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]){
+                if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]){ //Check if enemy is alive
                     EnemyAlive1 = false;
                 }
-                if (turn == false) {
-                    numMoves = 3;
+                if (turn == false) { //If not player's turn...
+                    numMoves = 3; //Reset number of moves to max
                     EndTurn.setText(R.string.Your_Turn); //Change text on button
-                    if (EnemyAlive1 == true) {
+                    if (EnemyAlive1 == true) { //If enemy is alive...
                         NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
                         char t, p;
                         t = int_to_char.get(NewEnemyPos[1]);
                         p = int_to_char.get(EnemyPos[1]);
-                        EnemyMove = game.canEnemyMove(Pos, EnemyPos);
+                        EnemyMove = game.canEnemyMove(Pos, EnemyPos); //Check if enemy can move
 
-                        if (EnemyMove == false && EnemyAlive1 == true) {
+                        if (EnemyMove == false && EnemyAlive1 == true) { //If enemy CAN move, then...
                             ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
-                            button.setImageResource(skeleton);
+                            button.setImageResource(skeleton); //"Move" enemy closer to player
                             tile = game.Pos_to_id(EnemyPos);
                             ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                            button1.setImageResource(tile);
-                            EnemyPos = NewEnemyPos;
-                        } else {
-                            health = health - 1;
+                            button1.setImageResource(tile); //Set previous space to tile drawable
+                            EnemyPos = NewEnemyPos; //Update enemy position after movement
+                        } else { //If enemy is cannot move (ie. enemy is right next to player)
+                            health = health - 1; //Player loses 1 health
                         }
                     }
-                    if (health == 2){
+                    if (health == 2){ //Setting image drawable based on player health
                         Heart0.setImageResource(R.drawable.emptyheart);
                     }
                     else if (health == 1){
@@ -309,34 +302,36 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                         Heart0.setImageResource(R.drawable.emptyheart);
                         Heart1.setImageResource(R.drawable.emptyheart);
                         Heart2.setImageResource(R.drawable.emptyheart);
+
+                        gameOver = true;
                     }
                 }
 
                 else{
-                    EndTurn.setText(R.string.Enemy_Turn);
+                    EndTurn.setText(R.string.Enemy_Turn); //If it's player's turn...
 
-                    EnemyPos = game.respawn(EnemyAlive1, EnemyPos, Pos);
+                    EnemyPos = game.respawn(EnemyAlive1, EnemyPos, Pos); //Check if enemy can respawn
 
-                    if (EnemyAlive1 == false){
-                        EnemyAlive1 = true;
+                    if (EnemyAlive1 == false){ //If enemy is dead...
+                        EnemyAlive1 = true; //Set enemy existence variable to true...
                         char q = int_to_char.get(EnemyPos[1]);
                         ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + q + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                        button.setImageResource(skeleton);
+                        button.setImageResource(skeleton); //Set enemy in respawn location
                     }
 
-                    int nextCard1 = cards.newCard();
+                    int nextCard1 = cards.newCard(); //Set piece cards to new pieces
                     int nextCard2 = cards.newCard();
                     int nextCard3 = cards.newCard();
 
-                    card1 = nextCard1;
+                    card1 = nextCard1; //Update piece card variables for getMovement function
                     card2 = nextCard2;
                     card3 = nextCard3;
 
-                    Card1.setImageResource(int_to_id.get(nextCard1));
+                    Card1.setImageResource(int_to_id.get(nextCard1)); //Set piece card drawable
                     Card2.setImageResource(int_to_id.get(nextCard2));
                     Card3.setImageResource(int_to_id.get(nextCard3));
 
-                    Energy0.setImageResource(R.drawable.energy);
+                    Energy0.setImageResource(R.drawable.energy); //Reset energy for start of new turn
                     Energy1.setImageResource(R.drawable.energy);
                     Energy2.setImageResource(R.drawable.energy);
                 }
@@ -344,9 +339,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         }
 
         //Selector for the move card
-        switch(v.getId()){
+        switch(v.getId()){ //Case/switch for buttons press of piece cards
             case R.id.imageButton:{
-                if (turn && numMoves > 0){
+                if (turn && numMoves > 0 && gameOver == false){ //Check if it's player's turn and still have moves left
                     cardpress1 = 1;
                     cardpress2 = 0;
                     cardpress3 = 0;
@@ -355,14 +350,14 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardactive3 = 0;
                 }
                 else{
-                    cardpress1 = 0;
+                    cardpress1 = 0; //Ensures no movement if conditionals fail
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
-                break;
+                break; //Identical functionality for all 3 piece cards
             }
             case R.id.imageButton2:{
-                if (turn && numMoves > 0){
+                if (turn && numMoves > 0 && gameOver == false){
                     cardpress1 = 0;
                     cardpress2 = 1;
                     cardpress3 = 0;
@@ -378,7 +373,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 break;
             }
             case R.id.imageButton3:{
-                if (turn && numMoves > 0){
+                if (turn && numMoves > 0 && gameOver == false){
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 1;
@@ -396,10 +391,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         }
 
         //Button for each tile and moving the player
-        switch(v.getId()){
+        switch(v.getId()){ //Switch/case for each space on 5 x 5 board
             case R.id.imageButtona0: {
                 int FinalPos1[] = {0, 4}; //Coordinates of tile
-                if (cardpress1 == 1){
+                if (cardpress1 == 1){ //Check which piece card is pressed
                     card = card1;
                 }
                 else if (cardpress2 == 1){
@@ -412,9 +407,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     card = 0;
                 }
                 boolean move = cards.getMovement(Pos, FinalPos1, card); //Checking if movement is valid
-                if (move) {
-                    numMoves -= 1;
-                    Energy = game.energySymbol(numMoves);
+                if (move) { //If movement is valid...
+                    numMoves -= 1; //Lose one energy
+                    Energy = game.energySymbol(numMoves); //Update amount of energy and set drawables
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
@@ -423,21 +418,21 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
                     ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + y + Pos[0], "id", this.requireActivity().getPackageName()));
-                    button.setImageResource(tileset);
+                    button.setImageResource(tileset); //Set previous location to tile
                     Pos = FinalPos1; //Updating position
-                    cardpress1 = 0; //Reseting selector states
+                    cardpress1 = 0; //Resetting selector states
                     cardpress2 = 0;
                     cardpress3 = 0;
                 }
                 else
-                {
+                {//Invalid move message
                     Toast.makeText(this.getActivity(), "Invalid Move! \nPick a card", Toast.LENGTH_SHORT).show();
                 }
 
-                cardpress1 = 0; //Reseting selector states
+                cardpress1 = 0; //Resetting selector states
                 cardpress2 = 0;
                 cardpress3 = 0;
-                break;
+                break; //Similar functionality for rest of tiles
             }
             case R.id.imageButtona1:
             {
