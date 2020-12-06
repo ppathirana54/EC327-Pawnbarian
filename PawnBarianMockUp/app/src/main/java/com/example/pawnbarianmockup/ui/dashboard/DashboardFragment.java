@@ -272,7 +272,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         Toast.makeText(this.getActivity(), "When you finish your turn, click End Your Turn to let the slime move or respawn.", Toast.LENGTH_LONG).show();
         Toast.makeText(this.getActivity(), "Then click Start Your turn to take your next move.", Toast.LENGTH_LONG).show();
         Toast.makeText(this.getActivity(), "If you end your turn next to the slime you will lose a life.", Toast.LENGTH_LONG).show();
-        Toast.makeText(this.getActivity(), "Good luck!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "As the game progresses, you will draw more blank cards, and may draw all blank cards. Good luck!", Toast.LENGTH_LONG).show();
         //Spawning Enemies in initial positions
         ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
         button1.setImageResource(slime);
