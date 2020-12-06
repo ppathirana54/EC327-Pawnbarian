@@ -255,6 +255,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         int_to_id.put(7, R.drawable.blank);
         int_to_id.put(8, R.drawable.blank);
         int_to_id.put(9, R.drawable.blank);
+        int_to_id.put(10, R.drawable.blank);
+        int_to_id.put(11, R.drawable.blank);
+        int_to_id.put(12, R.drawable.blank);
+        int_to_id.put(13, R.drawable.blank);
+        int_to_id.put(14, R.drawable.blank);
+        int_to_id.put(15, R.drawable.blank);
+        int_to_id.put(16, R.drawable.blank);
+        int_to_id.put(17, R.drawable.blank);
+        int_to_id.put(18, R.drawable.blank);
 
         Toast.makeText(this.getActivity(), "Instructions:", Toast.LENGTH_LONG).show();
         Toast.makeText(this.getActivity(), "Click on a card to move the knight like that piece.", Toast.LENGTH_LONG).show();
