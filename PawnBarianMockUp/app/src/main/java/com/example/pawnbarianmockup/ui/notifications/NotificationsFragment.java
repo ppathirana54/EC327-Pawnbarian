@@ -1,4 +1,4 @@
-package ui.notifications;
+package com.example.pawnbarianmockup.ui.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

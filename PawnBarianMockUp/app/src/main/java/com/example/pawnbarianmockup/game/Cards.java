@@ -1,4 +1,4 @@
-package game; /**
+package com.example.pawnbarianmockup.game; /**
  /**
  * Creates an object of the Piece Cards, contains the type.
  *

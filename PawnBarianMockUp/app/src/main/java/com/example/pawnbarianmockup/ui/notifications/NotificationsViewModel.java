@@ -1,4 +1,4 @@
-package ui.notifications;
+package com.example.pawnbarianmockup.ui.notifications;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

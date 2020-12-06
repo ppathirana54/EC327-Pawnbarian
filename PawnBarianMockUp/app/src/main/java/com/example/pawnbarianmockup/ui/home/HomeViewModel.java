@@ -1,4 +1,4 @@
-package ui.home;
+package com.example.pawnbarianmockup.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

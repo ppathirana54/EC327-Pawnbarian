@@ -1,4 +1,4 @@
-package ui.dashboard;
+package com.example.pawnbarianmockup.ui.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

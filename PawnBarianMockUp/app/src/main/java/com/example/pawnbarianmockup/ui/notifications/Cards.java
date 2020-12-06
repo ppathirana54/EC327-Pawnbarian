@@ -1,4 +1,4 @@
-package ui.notifications;
+package com.example.pawnbarianmockup.ui.notifications;
 /**
  * Creates an object of the Piece Cards, contains the type.
  *

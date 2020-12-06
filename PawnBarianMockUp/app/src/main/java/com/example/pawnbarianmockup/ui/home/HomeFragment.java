@@ -1,4 +1,4 @@
-package ui.home;
+package com.example.pawnbarianmockup.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

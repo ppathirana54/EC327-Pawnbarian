@@ -1,4 +1,4 @@
-package game;
+package com.example.pawnbarianmockup.game;
 
 /**
  * Holds Position and Can Move

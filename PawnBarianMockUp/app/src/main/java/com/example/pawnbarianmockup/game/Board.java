@@ -1,4 +1,4 @@
-package game;
+package com.example.pawnbarianmockup.game;
 /**
  * Creates the board class. Has a list of the number of enemies and creates a player.
  *

@@ -1,4 +1,4 @@
-package ui.dashboard;
+package com.example.pawnbarianmockup.ui.dashboard;
 
 import android.os.Build;
 import android.os.Bundle;

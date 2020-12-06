@@ -1,4 +1,4 @@
-package game;
+package com.example.pawnbarianmockup.game;
 
 import static java.lang.Math.abs;
 
