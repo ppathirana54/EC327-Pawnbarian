@@ -3,7 +3,7 @@
     <string name="title_Home">Home</string>
     <string name="title_name">Battle Chess</string>
     <string name="title_Play">Play</string>
-    <string name="title_Credits">Credits</string>
+    <string name="title_Credits">Info</string>
     <string name="title_image">TitleImage</string>
     <string name="instructions">Use corresponding cards below to move.\n Try to stay alive</string>
     <string name="todo">TODO</string>
