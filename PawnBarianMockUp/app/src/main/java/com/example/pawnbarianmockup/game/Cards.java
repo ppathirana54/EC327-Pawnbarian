@@ -50,16 +50,8 @@ public class Cards
         enemyinfrontofpawn = true;
     }
 
-    public String getPiece()
-    {
-        return piecesList.get(piece);
-    }
-
-    public void setPiece(int piece)
-    {
-        this.piece = piece;
-    }
-
+    //Checks if the player can move to a space based on
+    //The piece card selected
     public static boolean getMovement(int[] initPOS, int[] finalPOS, int piece)
     {
         if (initPOS[0] == finalPOS[0] && initPOS[1] == finalPOS[1]){
@@ -152,6 +144,7 @@ public class Cards
         return false;
     }
 
+    //Picks the next random piece card for the player
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public int newCard(){
         return ThreadLocalRandom.current().nextInt(1, 6 + 1);
