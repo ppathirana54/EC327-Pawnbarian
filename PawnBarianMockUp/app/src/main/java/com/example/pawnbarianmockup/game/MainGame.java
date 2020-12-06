@@ -1,4 +1,4 @@
-package com.example.pawnbarianmockup.game;
+package game;
 
 import android.os.Build;
 import android.text.style.ReplacementSpan;

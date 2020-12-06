@@ -1,4 +1,4 @@
-package com.example.pawnbarianmockup.game;
+package game;
 /**
  * Creates the player object contains their position health and gold.
  * Need to implement card drawing/card moving

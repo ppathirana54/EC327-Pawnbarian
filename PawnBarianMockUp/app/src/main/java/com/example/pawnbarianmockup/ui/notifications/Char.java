@@ -1,4 +1,4 @@
-package com.example.pawnbarianmockup.ui.notifications;
+package ui.notifications;
 
 /**
  * Holds Position and Can Move
