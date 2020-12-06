@@ -359,7 +359,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/blank"
         app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtone2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtone2"
+        android:contentDescription="@string/todo"/>
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -371,7 +372,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/blank"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtone1" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtone1"
+        android:contentDescription="@string/todo"/>
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -383,7 +385,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/blank"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtone3" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtone3"
+        android:contentDescription="@string/todo"/>
 
     <ImageView
         android:id="@+id/heart0"

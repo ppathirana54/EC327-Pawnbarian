@@ -28,6 +28,9 @@ import com.example.pawnbarianmockup.game.Enemy;
 import com.example.pawnbarianmockup.game.MainGame;
 import com.example.pawnbarianmockup.game.Player;
 
+import android.content.Intent;
+import com.example.pawnbarianmockup.GameOverActivity;
+
 import java.util.Hashtable;
 
 
@@ -210,7 +213,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         EndTurn.setOnClickListener(this);
 
-        Buttond2.setImageResource(R.drawable.barbarian); //Setting initial player position
+        Buttond2.setImageResource(R.drawable.pixelknight); //Setting initial player position
 
         int     bishop = R.drawable.bishop, //Id for pieces
                 king = R.drawable.king,
@@ -218,7 +221,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                 pawn = R.drawable.pawn,
                 queen = R.drawable.queen,
                 rook = R.drawable.rook,
-                skeleton = R.drawable.skeleton;
+                slime = R.drawable.slime;
 
         Card1.setOnClickListener(this); //Setting card selector buttons
         Card2.setOnClickListener(this);
@@ -248,18 +251,18 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
         //Spawning Enemies in initial positions
         ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
-        button1.setImageResource(skeleton);
+        button1.setImageResource(slime);
         //ImageButton button2 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 0, "id", this.requireActivity().getPackageName()));
-        //button2.setImageResource(skeleton);
+        //button2.setImageResource(slime);
         //ImageButton button3 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'b' + 4, "id", this.requireActivity().getPackageName()));
-        //button3.setImageResource(skeleton);
+        //button3.setImageResource(slime);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onClick(View v){
         Cards cards = new Cards(1); //Get access to Card class functions
 
-        int skeleton = R.drawable.skeleton; //Set id for enemy drawable
+        int slime = R.drawable.slime; //Set id for enemy drawable
         int tile; //Variable for tile drawable
 
         //End Turn
@@ -283,7 +286,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
                             if (EnemyMove == false && EnemyAlive1 == true) { //If enemy CAN move, then...
                                 ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
-                                button.setImageResource(skeleton); //"Move" enemy closer to player
+                                button.setImageResource(slime); //"Move" enemy closer to player
                                 tile = game.Pos_to_id(EnemyPos);
                                 ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
                                 button1.setImageResource(tile); //Set previous space to tile drawable
@@ -303,6 +306,12 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                             Heart2.setImageResource(R.drawable.emptyheart);
 
                             gameOver = true;
+                            Toast.makeText(this.getActivity(), "Game Over!!", Toast.LENGTH_SHORT).show();
+
+                            Intent gameOverIntent = new Intent(getActivity(), GameOverActivity.class);
+                            gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            getActivity().startActivity(gameOverIntent);
+
                         }
                     } else {
                         EndTurn.setText(R.string.Enemy_Turn); //If it's player's turn...
@@ -313,7 +322,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                             EnemyAlive1 = true; //Set enemy existence variable to true...
                             char q = int_to_char.get(EnemyPos[1]);
                             ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + q + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                            button.setImageResource(skeleton); //Set enemy in respawn location
+                            button.setImageResource(slime); //Set enemy in respawn location
                         }
 
                         int nextCard1 = cards.newCard(); //Set piece cards to new pieces
@@ -411,7 +420,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttona0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttona0.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -454,7 +463,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttona1.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttona1.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -496,7 +505,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttona2.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttona2.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -538,7 +547,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttona3.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttona3.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -580,7 +589,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttona4.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttona4.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -622,7 +631,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonb0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonb0.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -664,7 +673,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonb1.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonb1.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -706,7 +715,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonb2.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonb2.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -748,7 +757,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonb3.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonb3.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -790,7 +799,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonb4.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonb4.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -832,7 +841,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonc0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonc0.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -874,7 +883,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonc1.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonc1.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -916,7 +925,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonc2.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonc2.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -958,7 +967,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonc3.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonc3.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1000,7 +1009,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttonc4.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttonc4.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1042,7 +1051,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttond0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttond0.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1084,7 +1093,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttond1.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttond1.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1126,7 +1135,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttond2.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttond2.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1168,7 +1177,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttond3.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttond3.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1210,7 +1219,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttond4.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttond4.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1252,7 +1261,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttone0.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttone0.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1294,7 +1303,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttone1.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttone1.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1336,7 +1345,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttone2.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttone2.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1378,7 +1387,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttone3.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttone3.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
@@ -1420,7 +1429,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     Energy0.setImageResource(Energy[0]);
                     Energy1.setImageResource(Energy[1]);
                     Energy2.setImageResource(Energy[2]);
-                    Buttone4.setImageResource(R.drawable.barbarian); //Place player after tile reset
+                    Buttone4.setImageResource(R.drawable.pixelknight); //Place player after tile reset
                     char y;
                     y = int_to_char.get(Pos[1]);
                     tileset = game.Pos_to_id(Pos);
