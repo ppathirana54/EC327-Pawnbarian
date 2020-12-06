@@ -254,7 +254,14 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         int_to_id.put(8, R.drawable.blank);
         int_to_id.put(9, R.drawable.blank);
 
-
+        Toast.makeText(this.getActivity(), "Instructions:", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Click on a card to move the knight like that piece.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Then click a square to move to it.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "The energy shows you how many moves you have left this turn and hearts how many lives you have left.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "When you finish your turn, click End Your Turn to let the slime move or respawn.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Then click Start Your turn to take your next move.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "If you end your turn next to the slime you will lose a life.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Good luck!", Toast.LENGTH_LONG).show();
         //Spawning Enemies in initial positions
         ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + 'a' + 2, "id", this.requireActivity().getPackageName()));
         button1.setImageResource(slime);
@@ -314,7 +321,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                             Heart2.setImageResource(R.drawable.emptyheart);
 
                             gameOver = true;
-                            Toast.makeText(this.getActivity(), "Game Over!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this.getActivity(), "Maybe if you tried harder you wouldn't lose!\n\n-Blob the slime", Toast.LENGTH_LONG).show();
 
                             Intent gameOverIntent = new Intent(getActivity(), GameOverActivity.class);
                             gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -365,6 +372,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardactive3 = 0;
                 }
                 else{
+                    if (numMoves<1)
+                        Toast.makeText(this.getActivity(), "Out of moves for this turn", Toast.LENGTH_SHORT).show();
+                    if (!turn)
+                        Toast.makeText(this.getActivity(), "Not your turn currently. \nPress Start Your Turn", Toast.LENGTH_SHORT).show();
                     cardpress1 = 0; //Ensures no movement if conditionals fail
                     cardpress2 = 0;
                     cardpress3 = 0;
@@ -381,6 +392,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardactive3 = 0;
                 }
                 else{
+                    if (numMoves<1)
+                        Toast.makeText(this.getActivity(), "Out of moves for this turn", Toast.LENGTH_SHORT).show();
+                    if (!turn)
+                        Toast.makeText(this.getActivity(), "Not your turn currently. \nPress Start Your Turn", Toast.LENGTH_SHORT).show();
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 0;
@@ -397,6 +412,10 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     cardactive3 = 1;
                 }
                 else{
+                    if (numMoves<1)
+                        Toast.makeText(this.getActivity(), "Out of moves for this turn", Toast.LENGTH_SHORT).show();
+                    if (!turn)
+                        Toast.makeText(this.getActivity(), "Not your turn currently. \nPress Start Your Turn", Toast.LENGTH_SHORT).show();
                     cardpress1 = 0;
                     cardpress2 = 0;
                     cardpress3 = 0;
