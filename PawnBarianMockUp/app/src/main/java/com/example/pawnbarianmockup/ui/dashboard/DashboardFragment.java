@@ -1,6 +1,6 @@
 package com.example.pawnbarianmockup.ui.dashboard;
 
-import android.os.Build;
+import  android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -266,74 +266,72 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         switch(v.getId()){ //End turn Button
             //End of turn actions, Enemy move, Damage calculation
             case R.id.endturn:{
-                turn = !turn; //Check if it is the Player's turn
-                if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]){ //Check if enemy is alive
-                    EnemyAlive1 = false;
-                }
-                if (turn == false) { //If not player's turn...
-                    numMoves = 3; //Reset number of moves to max
-                    EndTurn.setText(R.string.Your_Turn); //Change text on button
-                    if (EnemyAlive1 == true) { //If enemy is alive...
-                        NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
-                        char t, p;
-                        t = int_to_char.get(NewEnemyPos[1]);
-                        p = int_to_char.get(EnemyPos[1]);
-                        EnemyMove = game.canEnemyMove(Pos, EnemyPos); //Check if enemy can move
+                if (gameOver == false){
+                    turn = !turn; //Check if it is the Player's turn
+                    if (Pos[0] == EnemyPos[0] && Pos[1] == EnemyPos[1]) { //Check if enemy is alive
+                        EnemyAlive1 = false;
+                    }
+                    if (turn == false) { //If not player's turn...
+                        numMoves = 3; //Reset number of moves to max
+                        EndTurn.setText(R.string.Your_Turn); //Change text on button
+                        if (EnemyAlive1 == true) { //If enemy is alive...
+                            NewEnemyPos = game.enemyTurn(EnemyPos, Pos); //Find next position of Enemy
+                            char t, p;
+                            t = int_to_char.get(NewEnemyPos[1]);
+                            p = int_to_char.get(EnemyPos[1]);
+                            EnemyMove = game.canEnemyMove(Pos, EnemyPos); //Check if enemy can move
 
-                        if (EnemyMove == false && EnemyAlive1 == true) { //If enemy CAN move, then...
-                            ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
-                            button.setImageResource(skeleton); //"Move" enemy closer to player
-                            tile = game.Pos_to_id(EnemyPos);
-                            ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                            button1.setImageResource(tile); //Set previous space to tile drawable
-                            EnemyPos = NewEnemyPos; //Update enemy position after movement
-                        } else { //If enemy is cannot move (ie. enemy is right next to player)
-                            health = health - 1; //Player loses 1 health
+                            if (EnemyMove == false && EnemyAlive1 == true) { //If enemy CAN move, then...
+                                ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + t + NewEnemyPos[0], "id", this.requireActivity().getPackageName()));
+                                button.setImageResource(skeleton); //"Move" enemy closer to player
+                                tile = game.Pos_to_id(EnemyPos);
+                                ImageButton button1 = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + p + EnemyPos[0], "id", this.requireActivity().getPackageName()));
+                                button1.setImageResource(tile); //Set previous space to tile drawable
+                                EnemyPos = NewEnemyPos; //Update enemy position after movement
+                            } else { //If enemy is cannot move (ie. enemy is right next to player)
+                                health = health - 1; //Player loses 1 health
+                            }
                         }
+                        if (health == 2) { //Setting image drawable based on player health
+                            Heart0.setImageResource(R.drawable.emptyheart);
+                        } else if (health == 1) {
+                            Heart0.setImageResource(R.drawable.emptyheart);
+                            Heart1.setImageResource(R.drawable.emptyheart);
+                        } else if (health == 0) {
+                            Heart0.setImageResource(R.drawable.emptyheart);
+                            Heart1.setImageResource(R.drawable.emptyheart);
+                            Heart2.setImageResource(R.drawable.emptyheart);
+
+                            gameOver = true;
+                        }
+                    } else {
+                        EndTurn.setText(R.string.Enemy_Turn); //If it's player's turn...
+
+                        EnemyPos = game.respawn(EnemyAlive1, EnemyPos, Pos); //Check if enemy can respawn
+
+                        if (EnemyAlive1 == false) { //If enemy is dead...
+                            EnemyAlive1 = true; //Set enemy existence variable to true...
+                            char q = int_to_char.get(EnemyPos[1]);
+                            ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + q + EnemyPos[0], "id", this.requireActivity().getPackageName()));
+                            button.setImageResource(skeleton); //Set enemy in respawn location
+                        }
+
+                        int nextCard1 = cards.newCard(); //Set piece cards to new pieces
+                        int nextCard2 = cards.newCard();
+                        int nextCard3 = cards.newCard();
+
+                        card1 = nextCard1; //Update piece card variables for getMovement function
+                        card2 = nextCard2;
+                        card3 = nextCard3;
+
+                        Card1.setImageResource(int_to_id.get(nextCard1)); //Set piece card drawable
+                        Card2.setImageResource(int_to_id.get(nextCard2));
+                        Card3.setImageResource(int_to_id.get(nextCard3));
+
+                        Energy0.setImageResource(R.drawable.energy); //Reset energy for start of new turn
+                        Energy1.setImageResource(R.drawable.energy);
+                        Energy2.setImageResource(R.drawable.energy);
                     }
-                    if (health == 2){ //Setting image drawable based on player health
-                        Heart0.setImageResource(R.drawable.emptyheart);
-                    }
-                    else if (health == 1){
-                        Heart0.setImageResource(R.drawable.emptyheart);
-                        Heart1.setImageResource(R.drawable.emptyheart);
-                    }
-                    else if (health == 0){
-                        Heart0.setImageResource(R.drawable.emptyheart);
-                        Heart1.setImageResource(R.drawable.emptyheart);
-                        Heart2.setImageResource(R.drawable.emptyheart);
-
-                        gameOver = true;
-                    }
-                }
-
-                else{
-                    EndTurn.setText(R.string.Enemy_Turn); //If it's player's turn...
-
-                    EnemyPos = game.respawn(EnemyAlive1, EnemyPos, Pos); //Check if enemy can respawn
-
-                    if (EnemyAlive1 == false){ //If enemy is dead...
-                        EnemyAlive1 = true; //Set enemy existence variable to true...
-                        char q = int_to_char.get(EnemyPos[1]);
-                        ImageButton button = (ImageButton) requireActivity().findViewById(getResources().getIdentifier("imageButton" + q + EnemyPos[0], "id", this.requireActivity().getPackageName()));
-                        button.setImageResource(skeleton); //Set enemy in respawn location
-                    }
-
-                    int nextCard1 = cards.newCard(); //Set piece cards to new pieces
-                    int nextCard2 = cards.newCard();
-                    int nextCard3 = cards.newCard();
-
-                    card1 = nextCard1; //Update piece card variables for getMovement function
-                    card2 = nextCard2;
-                    card3 = nextCard3;
-
-                    Card1.setImageResource(int_to_id.get(nextCard1)); //Set piece card drawable
-                    Card2.setImageResource(int_to_id.get(nextCard2));
-                    Card3.setImageResource(int_to_id.get(nextCard3));
-
-                    Energy0.setImageResource(R.drawable.energy); //Reset energy for start of new turn
-                    Energy1.setImageResource(R.drawable.energy);
-                    Energy2.setImageResource(R.drawable.energy);
                 }
             }
         }
