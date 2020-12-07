@@ -3,7 +3,7 @@
     <string name="title_Home">Home</string>
     <string name="title_name">Battle Chess</string>
     <string name="title_Play">Play</string>
-    <string name="title_Credits">Credits</string>
+    <string name="title_Credits">Info</string>
     <string name="title_image">TitleImage</string>
     <string name="instructions">Use corresponding cards below to move.\n Try to stay alive</string>
     <string name="todo">TODO</string>
@@ -16,22 +16,5 @@
     <string name="battle_chess">Battle Chess</string>
     <string name="press_play_to_begin">Press Play to Begin</string>
     <string name="killcounter">Kill Counter:</string>
-    <string name="Instructions">Instructions</string>
-    <string name="enemieskilled0">0</string>
-    <string name="enemieskilled1">1</string>
-    <string name="enemieskilled2">2</string>
-    <string name="enemieskilled3">3</string>
-    <string name="enemieskilled4">4</string>
-    <string name="enemieskilled5">5</string>
-    <string name="enemieskilled6">6</string>
-    <string name="enemieskilled7">7</string>
-    <string name="enemieskilled8">8</string>
-    <string name="enemieskilled9">9</string>
-    <string name="enemieskilled10">10</string>
-    <string name="enemieskilled11">11</string>
-    <string name="enemieskilled12">12</string>
-    <string name="enemieskilled13">13</string>
-    <string name="enemieskilled14">14</string>
-    <string name="enemieskilled15">15</string>
-    <string name="enemieskilledRAM">RAMPAGE</string>
+    <string name="enemieskilled">0</string>
 </resources>
