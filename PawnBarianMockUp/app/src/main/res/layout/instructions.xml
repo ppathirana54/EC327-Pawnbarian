@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:background="#62def8">
-
-<TextView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_margin="30dp"
-    android:textSize="22sp"
-    android:text="This is a popup window."/>
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:text="Tap a card to make your knight move like the piece. \n\nThe tap a space on the board to move. \n\nIf it is an invalid move, the game will tell you. \n\nThe hearts on the bottom left tell you how much health you have. \n\nThe energy below your hearts tell you how many moves you have left in that turn. \n\nWhen you have finished your turn, tap the End Your Turn button. \n\nThe slime will try to move to hurt you. \n\nTo kill, land on the same space as it. \n\nIf you end your turn next to the slime, you will take damage. \n\nGood luck!"
+        android:textSize="18sp" />
 
 </RelativeLayout>
