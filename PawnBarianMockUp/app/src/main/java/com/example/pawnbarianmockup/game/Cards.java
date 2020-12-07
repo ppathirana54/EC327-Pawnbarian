@@ -22,8 +22,7 @@ public class Cards
 {
     private Hashtable<Integer, String> piecesList = new Hashtable<Integer, String>();
     private int piece;
-    private static boolean pawncancaptureleft;
-    private static boolean pawncancaptureright;
+    private static boolean pawncancapture;
     private static boolean enemyinfrontofpawn;
     // private ArrayList<String> mods?
 
@@ -36,19 +35,14 @@ public class Cards
         piecesList.put(5, "Queen");
         piecesList.put(6, "King");
 
-        pawncancaptureleft = false;
-        pawncancaptureright = false;
+        pawncancapture = false;
         enemyinfrontofpawn = false;
 
         this.piece = piece;
     }
-    public void set_pawncancaptureleft()
+    public void set_pawncancapture()
     {
-        pawncancaptureleft = true;
-    }
-    public void set_pawncancaptureright()
-    {
-        pawncancaptureright = true;
+        pawncancapture = true;
     }
 
     public void set_enemyinfrontofpawn()
@@ -71,9 +65,7 @@ public class Cards
 
             if (!enemyinfrontofpawn && x==0 && y==1)
                 return true;
-            else if (pawncancaptureleft && x==-1 && y==1)
-                return true;
-            else if (pawncancaptureright && x==1 && y==1)
+            else if (pawncancapture && abs(x)==1 && y==1)
                 return true;
             else
                 return false;
@@ -155,11 +147,11 @@ public class Cards
     //Picks the next random piece card for the player
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public int newCard(int progression){
-        if (progression <= 24){
-            return ThreadLocalRandom.current().nextInt(1,6+progression/2 + 1);
+        if (progression >= 20){
+            return ThreadLocalRandom.current().nextInt(1, 8 + 1);
         }
         else{
-            return ThreadLocalRandom.current().nextInt(1, 18 + 1);
+            return ThreadLocalRandom.current().nextInt(1, 6 + 1);
         }
     }
 }
