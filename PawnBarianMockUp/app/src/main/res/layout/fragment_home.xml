@@ -20,52 +20,6 @@
         android:text="@string/title_name"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/text_home2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/todo"
-        android:fontFamily="monospace"
-        android:gravity="center_horizontal"
-        android:text="@string/a_pawnbarian_inspired_game"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11" />
-
-    <TextView
-        android:id="@+id/text_home3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/todo"
-        android:fontFamily="monospace"
-        android:gravity="center_horizontal"
-        android:text="@string/press_play_to_begin"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="monospace"
@@ -74,7 +28,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.849" />
+        app:layout_constraintVertical_bias="0.011" />
 
     <!--<ImageView
         android:id="@+id/home_image"
@@ -85,10 +39,29 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="75dp"
-        android:src="@drawable/medieval_background"
+        android:src="@drawable/medievalcastle"
         app:layout_constraintBottom_toBottomOf="@id/text_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription"/>-->
+
+    <Button
+        android:id="@+id/pop_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="700dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginRight="136dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/todo"
+        android:text="@string/Instructions"
+        app:backgroundTint="@color/purple_700"
+        app:layout_constraintBottom_toTopOf="@+id/text_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_home"
+        app:layout_constraintVertical_bias="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
