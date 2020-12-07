@@ -3,6 +3,7 @@ EC327: Pawnbarian Project
 Our app is a minimum viable product for a top down dungeon crawler game, which drew influences from the Steam game &quot;Pawnbarian&quot;. ([https://store.steampowered.com/app/1142080/Pawnbarian/](https://store.steampowered.com/app/1142080/Pawnbarian/))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Our team&#39;s application can be run by uploading it onto Android Studio and running it through the Android Emulator. No external libraries were used. As such all the necessary components needed for running the app are all present in the source code .zip file. Gameplay is simple. Your character&#39;s moveset follows that of the selected chess piece card. As the game progresses some of your movement cards will become blank. Other than that, just follow the text prompts on the screen. Additionally, instructions are also accessible in the application.
 
 As we drew on the work of others for certain components of this project, the citations can be seen below.
@@ -12,6 +13,12 @@ Our team&#39;s application can be run by uploading it onto Android Studio and ru
 Additionally, as we drew on the work of others for certain components of this project the citations can be seen below.
 >>>>>>> parent of 55ace01... Update on Readability
 
+=======
+Our team&#39;s application can be run by uploading it onto Android Studio and running it through the Android Emulator. No external libraries were used, as such all the necessary components needed for running the app are all present in the source code .zip file.
+
+Additionally, as we drew on the work of others for certain components of this project the citations can be seen below.
+
+>>>>>>> parent of 55ace01... Update on Readability
 Android Bottom Navigation Activity Reference
 
 Android Studio. (2020-07-20 UTC). BottomNavigationView Preset Template and Documentation [Android software]. Retrieved from:
