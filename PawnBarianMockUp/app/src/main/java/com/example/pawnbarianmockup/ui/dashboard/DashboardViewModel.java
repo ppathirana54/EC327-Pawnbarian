@@ -4,15 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.pawnbarianmockup.R;
-
 public class DashboardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
     public DashboardViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Kill Counter:");
+        mText.setValue("Instructions:Use corresponding cards below to move, try to stay alive!");
     }
 
     public LiveData<String> getText() {
