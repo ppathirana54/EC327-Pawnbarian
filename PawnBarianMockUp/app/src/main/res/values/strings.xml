@@ -12,14 +12,9 @@
     <string name="Enemy_Turn">End Your Turn</string>
     <string name="Game_Over">GAME OVER</string>
     <string name="Play_Again">Play Again</string>
-<<<<<<< HEAD
-    <string name="Instructions">Instructions</string>
-
-=======
     <string name="a_pawnbarian_inspired_game">A PawnBarian Inspired Game</string>
     <string name="battle_chess">Battle Chess</string>
     <string name="press_play_to_begin">Press Play to Begin</string>
     <string name="killcounter">Kill Counter:</string>
     <string name="enemieskilled">0</string>
->>>>>>> 55ace01e16dbd8f61514e80995c1697c867a78fc
 </resources>
